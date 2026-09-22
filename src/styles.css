@@ -277,10 +277,6 @@ a:hover .external-arrow, button:hover .external-arrow { transform: translate(2px
 .not-found { min-height: 70vh; display: grid; place-content: center; justify-items: center; gap: 30px; text-align: center; }
 .not-found h1 { margin: 0; }
 
-.skills-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 50px; }
-.skill-group h3 { margin: 0 0 9px; font-size: 13px; }
-.skill-group p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
-
 .connect-section { width: min(100%, 760px); display: flex; align-items: baseline; justify-content: space-between; gap: 32px; padding: 40px 0; border-top: 1px solid var(--line); }
 .connect-section h2 { margin: 0; font-size: 27px; font-weight: 500; }
 .connect-links { display: flex; flex-wrap: wrap; justify-content: flex-end; align-items: center; gap: 8px 22px; }
@@ -330,7 +326,6 @@ footer a { justify-self: end; }
   .page-intro { padding: 60px 0 44px; }
   .detail-row, .detail-links { grid-template-columns: 1fr; gap: 12px; }
   .research-card { padding: 21px 0; }
-  .skills-grid { gap: 28px; }
   .connect-section { align-items: flex-start; }
 }
 
@@ -343,7 +338,6 @@ footer a { justify-self: end; }
   .current-item { grid-template-columns: 1fr; gap: 4px; }
   .connect-section { flex-direction: column; gap: 22px; }
   .connect-links { justify-content: flex-start; }
-  .skills-grid { grid-template-columns: 1fr; }
   .research-card { flex-direction: column; }
   .wechat-popover { min-width: 220px; }
 }

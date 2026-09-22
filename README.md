@@ -1,28 +1,120 @@
-# Rooney Yan — Personal Website
+<div align="center">
 
-使用 React、TypeScript 和 Vite 构建，并通过 GitHub Actions 部署到 GitHub Pages。
+# Rooney YAN
 
-## 内容结构
+## Computer Science · AI Systems · Quantitative Research
 
-- Home：当前方向、精选项目、研究与近期写作
-- Projects：项目列表与独立详情页
-- Research：进行中的本科研究与论文发表
-- Writing：由 `src/content/writing/*.md` 自动生成的文章系统
-- About：教育、研究 / 经历、技能、CV 与联系方式
+*Building systems, exploring intelligence, and turning ideas into working products.*
 
-## 新增文章
+<br>
 
-复制 `src/content/writing/_template.md`，将文件名改为文章 slug（不要以下划线开头），填写 front matter 后直接使用 Markdown 写作。支持 `Technology`、`Markets`、`Ideas` 三个分类，以及 `zh`、`en`、`both` 三种语言标记。
+**Personal website for projects, research, writing, and experiments.**
 
-## 本地开发
+<br>
+
+[![Website](https://img.shields.io/badge/Website-Live-1f6feb?style=flat&logo=githubpages&logoColor=white)](https://rooney-yan.github.io/)
+[![GitHub](https://img.shields.io/badge/GitHub-Rooney--YAN-181717?style=flat&logo=github)](https://github.com/Rooney-YAN)
+![React](https://img.shields.io/badge/React-Latest-61DAFB?style=flat&logo=react&logoColor=111)
+![Vite](https://img.shields.io/badge/Vite-Latest-646CFF?style=flat&logo=vite&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-Ready-3178C6?style=flat&logo=typescript&logoColor=white)
+
+<br>
+
+**English** · [**中文**](README_zh.md)
+
+<br>
+
+**YAN Zhixiang · HKUST · 2026**
+
+---
+
+</div>
+
+## About
+
+This repository powers my personal website — a compact home for my projects, research interests, technical work, and public writing.
+
+The site is designed to stay lightweight and easy to maintain while giving each project or research direction a clear place to live.
+
+## What lives here
+
+- **Projects** — selected software, experiments, and prototypes
+- **Research** — current interests, reading, and research-related work
+- **Writing** — notes, reflections, and longer-form articles
+- **About** — background, interests, and ways to reach me
+
+## Tech Stack
+
+| Layer | Technology |
+| --- | --- |
+| UI | React |
+| Build tool | Vite |
+| Language | TypeScript / JavaScript |
+| Deployment | GitHub Pages |
+| Package manager | pnpm |
+
+The current site is a static React application built with Vite and deployed directly to GitHub Pages.
+
+## Local Development
 
 ```bash
+git clone https://github.com/Rooney-YAN/rooney-yan.github.io.git
+cd rooney-yan.github.io
+
 pnpm install
 pnpm dev
 ```
 
-生产构建：
+Build for production:
 
 ```bash
 pnpm build
 ```
+
+Preview the production build locally:
+
+```bash
+pnpm preview
+```
+
+## Project Structure
+
+```text
+.
+├── public/              # Static assets
+├── src/                 # React application
+├── .github/workflows/   # GitHub Pages deployment
+├── index.html
+├── package.json
+├── tsconfig.json
+└── vite.config.ts
+```
+
+## Design Direction
+
+The site follows a simple principle:
+
+> **One place for everything I build, study, and publish.**
+
+The goal is not to turn the website into a résumé dump, but into a living index of work that can grow over time.
+
+## Roadmap
+
+- [ ] Add dedicated project pages
+- [ ] Add research / reading notes
+- [ ] Add long-form writing
+- [ ] Improve project screenshots and visual storytelling
+- [ ] Add a custom domain when the site is mature enough
+
+## Links
+
+- **Website:** https://rooney-yan.github.io/
+- **GitHub:** https://github.com/Rooney-YAN
+
+---
+
+<div align="center">
+
+*Built as a personal workspace on the web.*
+
+</div>

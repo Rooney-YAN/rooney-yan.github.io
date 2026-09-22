@@ -28,10 +28,10 @@ http://localhost:5173/
 | 页面布局、字体、颜色、照片大小 | `src/styles.css` |
 | 页面结构和按钮行为 | `src/App.tsx` |
 | 独立 HTML CV | `public/cv.html` |
-| 文章内容 | `src/writing.ts` |
+| 文章正文 | `src/content/writing/*.md` |
 | 个人照片 | `public/Profile.jpg` |
 
-通常只需要修改 `src/data.ts` 和 `public/cv.html`。不要随意修改 `App.tsx`。
+`src/writing.ts` 只是读取并整理 Markdown 文章的程序，不是在里面写文章。通常只需要修改 `src/data.ts`、`src/content/writing/*.md` 和 `public/cv.html`，不要随意修改 `App.tsx` 或 `writing.ts`。
 
 ## 3. 修改姓名和联系方式
 
@@ -44,7 +44,7 @@ export const profile = {
 直接修改对应引号里的文字：
 
 ```ts
-name: 'Rooney Yan',
+name: { zh: '晏智翔', en: 'Rooney Yan' },
 email: 'zyanbs@connect.ust.hk',
 wechatId: 'Essential_Yan',
 ```

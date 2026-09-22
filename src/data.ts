@@ -2,7 +2,7 @@ export type Language = 'zh' | 'en'
 export type LocalizedText = Record<Language, string>
 
 export const profile = {
-  name: 'Rooney Yan',
+  name: { zh: '晏智翔', en: 'Rooney Yan' } satisfies LocalizedText,
   initials: 'RY',
   role: { zh: '香港科技大学 · 计算机科学工学士', en: 'BEng in Computer Science · HKUST' } satisfies LocalizedText,
   location: { zh: '中国香港', en: 'Hong Kong' } satisfies LocalizedText,
@@ -14,7 +14,6 @@ export const profile = {
     en: '',
   } satisfies LocalizedText,
   focus: ['AI Systems', 'Quantitative Finance', 'Technology & Ideas'],
-  availability: { zh: '正在香港科技大学学习与研究。', en: 'Studying and conducting research at HKUST.' } satisfies LocalizedText,
   resumeUrl: '/cv',
   photoUrl: '/Profile.jpg',
   links: [
@@ -128,15 +127,12 @@ export const education = [
   },
 ]
 
-// Add only skills Rooney has confirmed. The section remains data-driven.
-export const skillGroups: Array<{ label: LocalizedText; items: string[] | Record<Language, string[]> }> = []
-
 export const ui = {
   zh: {
     navLabel: '页面导航', home: '首页', projects: '项目', research: '研究', writing: '写作', about: '关于', eyebrow: '个人网站',
     currently: '目前', selectedProjects: '精选项目', viewProject: '查看项目', viewAll: '查看全部', researchIntro: '本科研究',
     recentWriting: '近期写作', noWriting: '文章正在准备中。', publications: '论文发表', noPublications: '暂无正式发表的论文。',
-    ongoingResearch: '进行中的研究', status: '状态', experience: '研究 / 经历', education: '教育', skills: '技能', cv: '简历',
+    ongoingResearch: '进行中的研究', status: '状态', experience: '研究 / 经历', education: '教育', cv: '简历',
     detailsPending: '具体内容将在资料确认后补充。', overview: '概览', problem: '问题', built: '构建内容', architecture: '架构 / 实现',
     learned: '收获', evidence: '证据', demo: '演示', github: 'GitHub', contact: '联系', contactTitle: 'Connect',
     contactText: '邮箱与社交链接', emailMe: '发送邮件', backToTop: '返回顶部',
@@ -147,7 +143,7 @@ export const ui = {
     navLabel: 'Page navigation', home: 'Home', projects: 'Projects', research: 'Research', writing: 'Writing', about: 'About', eyebrow: 'Personal Website',
     currently: 'Currently', selectedProjects: 'Selected Projects', viewProject: 'View project', viewAll: 'View all', researchIntro: 'Undergraduate Research',
     recentWriting: 'Recent Writing', noWriting: 'Writing is on the way.', publications: 'Publications', noPublications: 'No formal publications yet.',
-    ongoingResearch: 'Ongoing Research', status: 'Status', experience: 'Research / Experience', education: 'Education', skills: 'Skills', cv: 'CV',
+    ongoingResearch: 'Ongoing Research', status: 'Status', experience: 'Research / Experience', education: 'Education', cv: 'CV',
     detailsPending: 'Details will be added after the project material is confirmed.', overview: 'Overview', problem: 'Problem', built: 'What I Built',
     architecture: 'Architecture / Implementation', learned: 'What I Learned', evidence: 'Evidence', demo: 'Demo', github: 'GitHub', contact: 'Contact',
     contactTitle: 'Connect', contactText: 'Email and social links.',
