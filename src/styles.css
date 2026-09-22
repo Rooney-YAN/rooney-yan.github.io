@@ -71,12 +71,7 @@ a:hover { color: var(--accent); }
 .wordmark-mark {
   width: 32px;
   height: 32px;
-  display: grid;
-  place-items: center;
-  color: #fff;
-  background: #202223;
-  font-size: 11px;
-  letter-spacing: .04em;
+  display: block;
 }
 
 .header-actions { display: flex; align-items: center; gap: 28px; }
@@ -100,13 +95,13 @@ a:hover { color: var(--accent); }
 .theme-control { width: 36px; border-left: 1px solid var(--button-border) !important; font-size: 18px; }
 
 .hero {
-  min-height: 610px;
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 310px;
+  min-height: 560px;
+  display: flex;
   align-items: center;
-  gap: clamp(56px, 9vw, 120px);
-  padding: 84px 0 78px;
+  padding: 86px 0 82px;
 }
+.hero-profile { width: min(100%, 930px); display: grid; grid-template-columns: 118px minmax(0, 1fr); gap: 32px; align-items: start; }
+.hero-copy { min-width: 0; }
 
 .eyebrow, .section-number {
   margin: 0;
@@ -138,10 +133,10 @@ a:hover { color: var(--accent); }
 .external-arrow { display: inline-block; margin-left: 4px; font-size: .9em; transition: transform .18s ease; }
 a:hover .external-arrow { transform: translate(2px, -2px); }
 
-.portrait-column { align-self: center; }
+.portrait-column { width: 118px; }
 .portrait-frame {
   width: 100%;
-  aspect-ratio: 4 / 5;
+  aspect-ratio: 1;
   overflow: hidden;
   background: var(--surface-soft);
   border: 1px solid var(--line);
@@ -154,13 +149,13 @@ a:hover .external-arrow { transform: translate(2px, -2px); }
   place-items: center;
   color: var(--text);
   font-family: Georgia, "Times New Roman", serif;
-  font-size: 76px;
+  font-size: 38px;
   letter-spacing: -.08em;
   background:
     linear-gradient(135deg, transparent 49.5%, var(--line) 50%, transparent 50.5%),
     var(--surface-soft);
 }
-.portrait-column > p { margin: 16px 0 0; color: var(--quiet); font-size: 12px; line-height: 1.65; }
+.portrait-column > p { margin: 12px 0 0; color: var(--quiet); font-size: 10px; line-height: 1.55; }
 
 .profile-strip {
   display: grid;
@@ -265,10 +260,10 @@ a:hover .external-arrow { transform: translate(2px, -2px); }
 .skill-group h3 { margin: 0 0 9px; font-size: 13px; }
 .skill-group p { margin: 0; color: var(--muted); font-size: 14px; line-height: 1.7; }
 
-.contact-section { padding: 116px 0 122px; text-align: center; }
-.contact-section h2 { margin: 17px 0 0; font-family: Georgia, "Times New Roman", serif; font-size: clamp(40px, 6vw, 66px); font-weight: 500; letter-spacing: -.035em; }
-.contact-section > p:not(.eyebrow) { max-width: 570px; margin: 22px auto 0; color: var(--muted); font-size: 15px; line-height: 1.75; }
-.contact-email { display: inline-block; margin-top: 30px; padding-bottom: 4px; border-bottom: 1px solid currentColor; color: var(--accent); font-size: clamp(17px, 2.5vw, 23px); font-weight: 650; }
+.connect-section { display: flex; align-items: center; justify-content: space-between; gap: 40px; padding: 34px 0; border-top: 1px solid var(--line); }
+.connect-note { margin: 7px 0 0; color: var(--quiet); font-size: 11px; }
+.connect-links { display: flex; flex-wrap: wrap; justify-content: flex-end; gap: 10px 24px; color: var(--muted); font-size: 11px; }
+.connect-links a { padding-bottom: 2px; border-bottom: 1px solid var(--line); }
 
 footer { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; padding: 27px 0 36px; border-top: 1px solid var(--line); color: var(--quiet); font-size: 11px; }
 footer span:nth-child(2) { text-align: center; }
@@ -279,7 +274,7 @@ footer a { justify-self: end; }
   .header-actions { flex: 1; justify-content: flex-end; }
   .topbar nav { overflow-x: auto; max-width: calc(100vw - 230px); padding: 9px 0; scrollbar-width: none; }
   .topbar nav::-webkit-scrollbar { display: none; }
-  .hero { grid-template-columns: minmax(0, 1fr) 240px; gap: 50px; min-height: auto; }
+  .hero { min-height: auto; }
   .resume-section, .projects-section { grid-template-columns: 145px minmax(0, 1fr); gap: 35px; }
   .resume-entry { grid-template-columns: 125px minmax(0, 1fr); gap: 25px; }
 }
@@ -291,11 +286,12 @@ footer a { justify-self: end; }
   .header-actions { gap: 12px; }
   .topbar nav { max-width: calc(100vw - 155px); gap: 18px; }
   .topbar nav a { white-space: nowrap; }
-  .hero { grid-template-columns: 1fr; gap: 45px; padding: 58px 0; }
-  .hero h1 { font-size: clamp(50px, 16vw, 72px); }
+  .hero { padding: 58px 0; }
+  .hero-profile { grid-template-columns: 86px minmax(0, 1fr); gap: 20px; }
+  .hero h1 { font-size: clamp(44px, 12vw, 64px); }
   .summary { font-size: 16px; }
-  .portrait-column { display: grid; grid-template-columns: 140px 1fr; align-items: end; gap: 16px; }
-  .portrait-column > p { margin: 0; }
+  .portrait-column { width: 86px; }
+  .portrait-column > p { display: none; }
   .profile-strip { grid-template-columns: 1fr; gap: 18px; }
   .resume-section, .projects-section { grid-template-columns: 1fr; gap: 38px; padding: 60px 0; }
   .resume-entry { grid-template-columns: 1fr; gap: 18px; }
@@ -313,7 +309,7 @@ footer a { justify-self: end; }
   .detail-row, .detail-links { grid-template-columns: 1fr; gap: 12px; }
   .research-card { padding: 22px; }
   .skills-grid { gap: 28px; }
-  .contact-section { padding: 86px 0 92px; }
+  .connect-section { align-items: flex-start; }
   footer { grid-template-columns: 1fr auto; }
   footer span:nth-child(2) { display: none; }
 }
@@ -324,7 +320,11 @@ footer a { justify-self: end; }
   .topbar nav { max-width: calc(100vw - 118px); }
   .hero-links { display: grid; grid-template-columns: 1fr 1fr; }
   .primary-button { grid-column: 1 / -1; }
-  .portrait-column { grid-template-columns: 112px 1fr; }
+  .hero-profile { grid-template-columns: 1fr; }
+  .portrait-column { width: 74px; }
+  .hero h1 { font-size: clamp(44px, 15vw, 60px); }
+  .connect-section { flex-direction: column; gap: 22px; }
+  .connect-links { justify-content: flex-start; }
   .skills-grid { grid-template-columns: 1fr; }
   .research-card { flex-direction: column; }
 }
@@ -347,7 +347,7 @@ footer a { justify-self: end; }
     --accent: #000;
   }
   .page { width: 100%; }
-  .topbar, .hero-links, .portrait-column, .contact-section, footer { display: none; }
+  .topbar, .hero-links, .portrait-column, .connect-section, footer { display: none; }
   .hero { min-height: auto; display: block; padding: 0 0 28px; }
   .hero h1 { font-size: 45px; }
   .summary { max-width: none; }
