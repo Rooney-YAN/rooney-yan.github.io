@@ -48,15 +48,13 @@ function ExternalLink({ href, children, className }: { href: string; children: R
   return <a className={className} href={href} target="_blank" rel="noreferrer">{children} <span className="external-arrow" aria-hidden="true">↗</span></a>
 }
 
-function SectionHeading({ number, title, id }: { number: string; title: string; id?: string }) {
-  return <div className="section-heading"><p className="section-number">{number}</p><h2 id={id}>{title}</h2></div>
+function SectionHeading({ title, id }: { number?: string; title: string; id?: string }) {
+  return <div className="section-heading"><h2 id={id}>{title}</h2></div>
 }
 
-function ProjectCard({ project, index, language, navigate }: { project: Project; index: number; language: Language; navigate: Navigate }) {
-  const copy = ui[language]
+function ProjectCard({ project, language, navigate }: { project: Project; language: Language; navigate: Navigate }) {
   return <article className="project-card">
-    <div className="project-topline"><span>{String(index + 1).padStart(2, '0')} / {project.status[language]}</span><Link to={`/projects/${project.slug}`} navigate={navigate}>{copy.viewProject} <span aria-hidden="true">→</span></Link></div>
-    <h3>{project.title}</h3><p>{project.description[language]}</p>
+    <h3><Link to={`/projects/${project.slug}`} navigate={navigate}>{project.title}</Link></h3><p>{project.description[language]}</p>
     {project.technologies.length > 0 && <ul className="tag-list">{project.technologies.map((item) => <li key={item}>{item}</li>)}</ul>}
   </article>
 }
@@ -79,30 +77,31 @@ function WritingList({ items, language, navigate }: { items: Article[]; language
 
 function Contact({ language }: { language: Language }) {
   const copy = ui[language]
-  return <section className="connect-section" id="contact"><div><p className="eyebrow">{copy.contactTitle}</p><p className="connect-note">{copy.contactText}</p></div><div className="connect-links"><a href={`mailto:${profile.email}`}>{profile.email}</a>{profile.links.map((link) => <ExternalLink href={link.href} key={link.label}>{link.label}</ExternalLink>)}</div></section>
+  return <section className="connect-section" id="contact"><h2>{copy.contactTitle}</h2><div className="connect-links"><a href={`mailto:${profile.email}`}>{profile.email}</a>{profile.links.map((link) => <ExternalLink href={link.href} key={link.label}>{link.label}</ExternalLink>)}</div></section>
 }
 
 function Home({ language, navigate }: { language: Language; navigate: Navigate }) {
   const copy = ui[language]
   return <>
     <section className="hero" aria-labelledby="hero-title">
-      <div className="hero-profile"><div className="portrait-column"><div className="portrait-frame">{profile.photoUrl ? <img src={profile.photoUrl} alt={copy.photoAlt} /> : <span className="portrait-placeholder" aria-label={copy.photoAlt}>{profile.initials}</span>}</div><p>{profile.availability[language]}</p></div><div className="hero-copy"><p className="eyebrow">{copy.eyebrow}</p><h1 id="hero-title">{profile.name}</h1><p className="role">{profile.role[language]}</p>{profile.summary[language] && <p className="summary">{profile.summary[language]}</p>}<ul className="focus-list">{profile.focus.map((item) => <li key={item}>{item}</li>)}</ul><div className="hero-links"><Link className="button primary-button" to="/projects" navigate={navigate}>{copy.projects}</Link>{profile.links.map((link) => <ExternalLink className="button secondary-button" href={link.href} key={link.label}>{link.label}</ExternalLink>)}</div></div></div>
+      <div className="hero-copy"><h1 id="hero-title">{profile.name}</h1><p className="role">{profile.role[language]}</p>{profile.summary[language] && <p className="summary">{profile.summary[language]}</p>}<div className="hero-links"><Link className="button primary-button" to="/projects" navigate={navigate}>{copy.projects}</Link>{profile.links.map((link) => <ExternalLink className="button secondary-button" href={link.href} key={link.label}>{link.label}</ExternalLink>)}</div></div>
+      <div className="portrait-column"><div className="portrait-frame">{profile.photoUrl ? <img src={profile.photoUrl} alt={copy.photoAlt} /> : <span className="portrait-placeholder" aria-label={copy.photoAlt}>{profile.initials}</span>}</div></div>
     </section>
     <section className="resume-section"><SectionHeading number="01" title={copy.currently} id="currently-title"/><div className="currently-grid">{currently.map((item) => <div className="current-item" key={item.label.en}><span>{item.label[language]}</span><p>{item.text[language]}</p></div>)}</div></section>
-    <section className="resume-section projects-section"><SectionHeading number="02" title={copy.selectedProjects}/><div><div className="project-grid">{projects.filter((p) => p.selected).map((project, index) => <ProjectCard key={project.slug} project={project} index={index} language={language} navigate={navigate}/>)}</div><Link className="section-link" to="/projects" navigate={navigate}>{copy.viewAll} →</Link></div></section>
+    <section className="resume-section projects-section"><SectionHeading number="02" title={copy.selectedProjects}/><div><div className="project-grid">{projects.filter((p) => p.selected).map((project) => <ProjectCard key={project.slug} project={project} language={language} navigate={navigate}/>)}</div><Link className="section-link" to="/projects" navigate={navigate}>{copy.viewAll} →</Link></div></section>
     <section className="resume-section"><SectionHeading number="03" title={copy.research}/><div><ResearchCard language={language}/><Link className="section-link" to="/research" navigate={navigate}>{copy.viewAll} →</Link></div></section>
     <section className="resume-section"><SectionHeading number="04" title={copy.recentWriting}/><div><WritingList items={articles.slice(0, 3)} language={language} navigate={navigate}/><Link className="section-link" to="/writing" navigate={navigate}>{copy.viewAll} →</Link></div></section>
     <Contact language={language}/>
   </>
 }
 
-function PageIntro({ eyebrow, title, text }: { eyebrow: string; title: string; text?: string }) {
-  return <header className="page-intro"><p className="eyebrow">{eyebrow}</p><h1>{title}</h1>{text && <p>{text}</p>}</header>
+function PageIntro({ title, text }: { eyebrow: string; title: string; text?: string }) {
+  return <header className="page-intro"><h1>{title}</h1>{text && <p>{text}</p>}</header>
 }
 
 function ProjectsPage({ language, navigate }: { language: Language; navigate: Navigate }) {
   const copy = ui[language]
-  return <><PageIntro eyebrow={copy.eyebrow} title={copy.projects} text={language === 'zh' ? '持续构建中的项目与实验。' : 'Projects and experiments, documented as they develop.'}/><section className="page-section"><div className="project-grid all-projects">{projects.map((project, index) => <ProjectCard key={project.slug} project={project} index={index} language={language} navigate={navigate}/>)}</div><div className="future-note"><span>+</span><p>{language === 'zh' ? '未来项目会继续在这里补充。' : 'Future projects will be added here.'}</p></div></section></>
+  return <><PageIntro eyebrow={copy.eyebrow} title={copy.projects} text={language === 'zh' ? '持续构建中的项目与实验。' : 'Projects and experiments, documented as they develop.'}/><section className="page-section"><div className="project-grid all-projects">{projects.map((project) => <ProjectCard key={project.slug} project={project} language={language} navigate={navigate}/>)}</div><div className="future-note"><span>+</span><p>{language === 'zh' ? '未来项目会继续在这里补充。' : 'Future projects will be added here.'}</p></div></section></>
 }
 
 function ProjectPage({ project, language, navigate }: { project: Project; language: Language; navigate: Navigate }) {
@@ -158,7 +157,7 @@ function App() {
   }, [path, language])
 
   const nav = [['/', copy.home], ['/projects', copy.projects], ['/research', copy.research], ['/writing', copy.writing], ['/about', copy.about]] as const
-  return <div className="page" id="top"><a className="skip-link" href="#main">{copy.skipToContent}</a><header className="topbar"><Link className="wordmark" to="/" navigate={navigate}><img className="wordmark-mark" src="/rooney-mark.svg" alt=""/><span>{profile.name}</span></Link><div className="header-actions"><nav aria-label={copy.navLabel}>{nav.map(([to, label]) => <Link className={path === to ? 'active' : ''} to={to} navigate={navigate} key={to}>{label}</Link>)}</nav><div className="controls"><button className="text-control" type="button" onClick={() => setLanguage(language === 'zh' ? 'en' : 'zh')} aria-label={copy.switchLanguage}>{language === 'zh' ? 'EN' : '中文'}</button><button className="theme-control" type="button" onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} aria-label={theme === 'light' ? copy.darkTheme : copy.lightTheme}><span aria-hidden="true">{theme === 'light' ? '◐' : '○'}</span></button></div></div></header><main id="main">{content}</main><footer><span>© {new Date().getFullYear()} {profile.name}</span><span>{language === 'zh' ? '使用 React 构建' : 'Built with React'}</span><a href="#top">{copy.backToTop} ↑</a></footer></div>
+  return <div className="page" id="top"><a className="skip-link" href="#main">{copy.skipToContent}</a><header className="topbar"><Link className="wordmark" to="/" navigate={navigate}><img className="wordmark-mark" src="/rooney-mark.svg" alt=""/><span>{profile.name}</span></Link><div className="header-actions"><nav aria-label={copy.navLabel}>{nav.map(([to, label]) => <Link className={path === to ? 'active' : ''} to={to} navigate={navigate} key={to}>{label}</Link>)}</nav><div className="controls"><button className="text-control" type="button" onClick={() => setLanguage(language === 'zh' ? 'en' : 'zh')} aria-label={copy.switchLanguage}>{language === 'zh' ? 'EN' : '中文'}</button><button className="theme-control" type="button" onClick={() => setTheme(theme === 'light' ? 'dark' : 'light')} aria-label={theme === 'light' ? copy.darkTheme : copy.lightTheme}><span aria-hidden="true">{theme === 'light' ? '☼' : '◐'}</span></button></div></div></header><main id="main" className="page-content" key={path}>{content}</main><footer><span>© {new Date().getFullYear()} {profile.name}</span><a href="#top">{copy.backToTop} ↑</a></footer></div>
 }
 
 export default App

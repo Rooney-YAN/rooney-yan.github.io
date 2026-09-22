@@ -1,6 +1,31 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-labelledby="title">
-  <title id="title">Rooney Yan monogram</title>
-  <rect width="64" height="64" rx="2" fill="#202223"/>
-  <path d="M13 52V12h21l15 13-14 13H13M35 38l15 14" fill="none" stroke="#f5f4ef" stroke-width="4.25" stroke-linecap="square" stroke-linejoin="miter"/>
-  <path d="M20 18l12 13 12-13M32 31v20" fill="none" stroke="#9fc8b9" stroke-width="4.25" stroke-linecap="square" stroke-linejoin="miter"/>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 82" role="img" aria-labelledby="title">
+  <title id="title">Rooney Yan mark</title>
+  <rect width="120" height="82" rx="2" fill="#202223"/>
+  <g fill="none" stroke="#f5f4ef" stroke-width="3.4" stroke-linecap="square" stroke-linejoin="miter">
+    <!-- Upper-left framework -->
+    <path d="M10 9H39L61 37"/>
+    <path d="M13 11L54 39"/>
+    <path d="M37 12L61 37"/>
+    <path d="M60 38L59 11"/>
+
+    <!-- Upper-right framework and long descending arm -->
+    <path d="M62 11L91 7H105L82 37L112 72H91"/>
+    <path d="M63 12L64 35"/>
+    <path d="M81 38L111 70"/>
+
+    <!-- Lower-left framework -->
+    <path d="M54 47L22 73L73 74"/>
+    <path d="M52 49L29 64"/>
+    <path d="M69 50L72 72"/>
+
+    <!-- Lower-right inner framework -->
+    <path d="M78 50L81 72"/>
+    <path d="M78 50L96 68"/>
+  </g>
+
+  <!-- The two inset triangular details from the original sketch -->
+  <g fill="none" stroke="#9fc8b9" stroke-width="3" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M69 16H80L70 27L69 16"/>
+    <path d="M59 53L47 66H65L63 54"/>
+  </g>
 </svg>
