@@ -48,7 +48,36 @@ function ExternalLink({ href, children, className }: { href: string; children: R
   return <a className={className} href={href} target="_blank" rel="noreferrer">{children} <span className="external-arrow" aria-hidden="true">↗</span></a>
 }
 
-function SectionHeading({ title, id }: { number?: string; title: string; id?: string }) {
+function WeChatContact({ language, className }: { language: Language; className?: string }) {
+  const [open, setOpen] = useState(false)
+  const [copyState, setCopyState] = useState<'idle' | 'copied' | 'failed'>('idle')
+  const copyId = async () => {
+    try {
+      await navigator.clipboard.writeText(profile.wechatId)
+      setCopyState('copied')
+    } catch {
+      setCopyState('failed')
+    }
+    window.setTimeout(() => setCopyState('idle'), 1600)
+  }
+  return <span className="wechat-contact">
+    <button className={className} type="button" aria-expanded={open} onClick={() => setOpen(!open)}>WeChat <span className="external-arrow" aria-hidden="true">↗</span></button>
+    {open && <span className="wechat-popover" role="dialog" aria-label="WeChat ID">
+      <span className="wechat-id">{profile.wechatId}</span>
+      <button type="button" onClick={copyId}>{copyState === 'copied' ? (language === 'zh' ? '已复制' : 'Copied') : copyState === 'failed' ? (language === 'zh' ? '复制失败' : 'Failed') : (language === 'zh' ? '复制' : 'Copy')}</button>
+    </span>}
+  </span>
+}
+
+function ContactLinks({ language, className }: { language: Language; className: string }) {
+  return <div className={className}>
+    <WeChatContact language={language} className="contact-link"/>
+    <a className="contact-link" href={`mailto:${profile.email}`}>Email <span className="external-arrow" aria-hidden="true">↗</span></a>
+    {profile.links.map((link) => <ExternalLink className="contact-link" href={link.href} key={link.label}>{link.label}</ExternalLink>)}
+  </div>
+}
+
+function SectionHeading({ title, id }: { title: string; id?: string }) {
   return <div className="section-heading"><h2 id={id}>{title}</h2></div>
 }
 
@@ -77,57 +106,56 @@ function WritingList({ items, language, navigate }: { items: Article[]; language
 
 function Contact({ language }: { language: Language }) {
   const copy = ui[language]
-  return <section className="connect-section" id="contact"><h2>{copy.contactTitle}</h2><div className="connect-links"><a href={`mailto:${profile.email}`}>{profile.email}</a>{profile.links.map((link) => <ExternalLink href={link.href} key={link.label}>{link.label}</ExternalLink>)}</div></section>
+  return <section className="connect-section" id="contact"><h2>{copy.contactTitle}</h2><ContactLinks language={language} className="connect-links"/></section>
 }
 
 function Home({ language, navigate }: { language: Language; navigate: Navigate }) {
   const copy = ui[language]
   return <>
     <section className="hero" aria-labelledby="hero-title">
-      <div className="hero-copy"><h1 id="hero-title">{profile.name}</h1><p className="role">{profile.role[language]}</p>{profile.summary[language] && <p className="summary">{profile.summary[language]}</p>}<div className="hero-links"><Link className="button primary-button" to="/projects" navigate={navigate}>{copy.projects}</Link>{profile.links.map((link) => <ExternalLink className="button secondary-button" href={link.href} key={link.label}>{link.label}</ExternalLink>)}</div></div>
+      <div className="hero-copy"><h1 id="hero-title">{profile.name}</h1><p className="role">{profile.role[language]}</p>{profile.summary[language] && <p className="summary">{profile.summary[language]}</p>}<ContactLinks language={language} className="hero-links"/></div>
       <div className="portrait-column"><div className="portrait-frame">{profile.photoUrl ? <img src={profile.photoUrl} alt={copy.photoAlt} /> : <span className="portrait-placeholder" aria-label={copy.photoAlt}>{profile.initials}</span>}</div></div>
     </section>
-    <section className="resume-section"><SectionHeading number="01" title={copy.currently} id="currently-title"/><div className="currently-grid">{currently.map((item) => <div className="current-item" key={item.label.en}><span>{item.label[language]}</span><p>{item.text[language]}</p></div>)}</div></section>
-    <section className="resume-section projects-section"><SectionHeading number="02" title={copy.selectedProjects}/><div><div className="project-grid">{projects.filter((p) => p.selected).map((project) => <ProjectCard key={project.slug} project={project} language={language} navigate={navigate}/>)}</div><Link className="section-link" to="/projects" navigate={navigate}>{copy.viewAll} →</Link></div></section>
-    <section className="resume-section"><SectionHeading number="03" title={copy.research}/><div><ResearchCard language={language}/><Link className="section-link" to="/research" navigate={navigate}>{copy.viewAll} →</Link></div></section>
-    <section className="resume-section"><SectionHeading number="04" title={copy.recentWriting}/><div><WritingList items={articles.slice(0, 3)} language={language} navigate={navigate}/><Link className="section-link" to="/writing" navigate={navigate}>{copy.viewAll} →</Link></div></section>
+    <section className="resume-section"><SectionHeading title={copy.currently} id="currently-title"/><div className="currently-grid">{currently.map((item) => <div className="current-item" key={item.label.en}><span>{item.label[language]}</span><p>{item.text[language]}</p></div>)}</div></section>
+    <section className="resume-section projects-section"><SectionHeading title={copy.selectedProjects}/><div><div className="project-grid">{projects.filter((p) => p.selected).map((project) => <ProjectCard key={project.slug} project={project} language={language} navigate={navigate}/>)}</div><Link className="section-link" to="/projects" navigate={navigate}>{copy.viewAll} →</Link></div></section>
+    <section className="resume-section"><SectionHeading title={copy.research}/><div><ResearchCard language={language}/><Link className="section-link" to="/research" navigate={navigate}>{copy.viewAll} →</Link></div></section>
+    <section className="resume-section"><SectionHeading title={copy.recentWriting}/><div><WritingList items={articles.slice(0, 3)} language={language} navigate={navigate}/><Link className="section-link" to="/writing" navigate={navigate}>{copy.viewAll} →</Link></div></section>
     <Contact language={language}/>
   </>
 }
 
-function PageIntro({ title, text }: { eyebrow: string; title: string; text?: string }) {
+function PageIntro({ title, text }: { title: string; text?: string }) {
   return <header className="page-intro"><h1>{title}</h1>{text && <p>{text}</p>}</header>
 }
 
 function ProjectsPage({ language, navigate }: { language: Language; navigate: Navigate }) {
   const copy = ui[language]
-  return <><PageIntro eyebrow={copy.eyebrow} title={copy.projects} text={language === 'zh' ? '持续构建中的项目与实验。' : 'Projects and experiments, documented as they develop.'}/><section className="page-section"><div className="project-grid all-projects">{projects.map((project) => <ProjectCard key={project.slug} project={project} language={language} navigate={navigate}/>)}</div><div className="future-note"><span>+</span><p>{language === 'zh' ? '未来项目会继续在这里补充。' : 'Future projects will be added here.'}</p></div></section></>
+  return <><PageIntro title={copy.projects}/><section className="page-section"><div className="project-grid all-projects">{projects.map((project) => <ProjectCard key={project.slug} project={project} language={language} navigate={navigate}/>)}</div></section></>
 }
 
 function ProjectPage({ project, language, navigate }: { project: Project; language: Language; navigate: Navigate }) {
   const copy = ui[language]
-  const sections = [copy.overview, copy.problem, copy.built, copy.architecture, copy.learned, copy.evidence]
-  return <><PageIntro eyebrow={`${copy.projects} / ${project.status[language]}`} title={project.title} text={project.description[language]}/><section className="project-detail">{sections.map((title) => <div className="detail-row" key={title}><h2>{title}</h2><p>{copy.detailsPending}</p></div>)}<div className="detail-links"><span>{copy.github}</span><span>{project.github ? <ExternalLink href={project.github}>{copy.github}</ExternalLink> : copy.detailsPending}</span><span>{copy.demo}</span><span>{project.demo ? <ExternalLink href={project.demo}>{copy.demo}</ExternalLink> : copy.detailsPending}</span></div></section><Link className="section-link back-link" to="/projects" navigate={navigate}>← {copy.projects}</Link></>
+  return <><PageIntro title={project.title}/><section className="project-detail"><div className="detail-row"><h2>{copy.overview}</h2><div className="detail-copy"><p>{project.description[language]}</p>{project.highlights && <ul>{project.highlights.map((item) => <li key={item.en}>{item[language]}</li>)}</ul>}</div></div><div className="detail-row"><h2>{language === 'zh' ? '技术栈' : 'Stack'}</h2><p>{project.technologies.join(' · ')}</p></div><div className="detail-links"><span>{copy.github}</span><span>{project.github && <ExternalLink href={project.github}>{project.title}</ExternalLink>}</span>{project.demo && <><span>{copy.demo}</span><span><ExternalLink href={project.demo}>{copy.demo}</ExternalLink></span></>}</div></section><Link className="section-link back-link" to="/projects" navigate={navigate}>← {copy.projects}</Link></>
 }
 
 function ResearchPage({ language }: { language: Language }) {
   const copy = ui[language]
-  return <><PageIntro eyebrow={copy.researchIntro} title={copy.research} text={language === 'zh' ? '记录进行中的本科研究；未完成的工作不会被包装成成果。' : 'Undergraduate research in progress, presented as work in progress rather than finished results.'}/><section className="resume-section page-section"><SectionHeading number="01" title={copy.ongoingResearch}/><div>{research.map((item) => <ResearchCard key={item.title} language={language}/>)}</div></section><section className="resume-section"><SectionHeading number="02" title={copy.publications}/><p className="empty-state">{copy.noPublications}</p></section></>
+  return <><PageIntro title={copy.research}/><section className="resume-section page-section"><SectionHeading title={copy.ongoingResearch}/><div>{research.map((item) => <ResearchCard key={item.title} language={language}/>)}</div></section><section className="resume-section"><SectionHeading title={copy.publications}/><p className="empty-state">{copy.noPublications}</p></section></>
 }
 
 function WritingPage({ language, navigate }: { language: Language; navigate: Navigate }) {
   const copy = ui[language]
-  return <><PageIntro eyebrow="Technology · Markets · Ideas" title={copy.writing} text={language === 'zh' ? '关于技术、市场与想法的长期笔记。' : 'Long-form notes on technology, markets, and ideas.'}/><div className="category-line">{['Technology', 'Markets', 'Ideas'].map((item) => <span key={item}>{item}</span>)}</div><section className="page-section"><WritingList items={articles} language={language} navigate={navigate}/></section></>
+  return <><PageIntro title={copy.writing}/><section className="page-section"><WritingList items={articles} language={language} navigate={navigate}/></section></>
 }
 
 function ArticlePage({ article, language, navigate }: { article: Article; language: Language; navigate: Navigate }) {
   const copy = ui[language]
-  return <article className="article-page"><header><Link className="back-link" to="/writing" navigate={navigate}>← {copy.allWriting}</Link><p className="eyebrow">{article.category}</p><h1>{article.title}</h1><p className="article-excerpt">{article.excerpt}</p><div className="article-meta"><time dateTime={article.date}>{article.date}</time><span>{article.tags.join(' · ')}</span></div></header><div className="prose"><Markdown source={article.content}/></div></article>
+  return <article className="article-page"><header><Link className="back-link" to="/writing" navigate={navigate}>← {copy.allWriting}</Link><h1>{article.title}</h1><p className="article-excerpt">{article.excerpt}</p><div className="article-meta"><span>{article.category}</span><time dateTime={article.date}>{article.date}</time><span>{article.tags.join(' · ')}</span></div></header><div className="prose"><Markdown source={article.content}/></div></article>
 }
 
-function AboutPage({ language }: { language: Language }) {
+function AboutPage({ language, navigate }: { language: Language; navigate: Navigate }) {
   const copy = ui[language]
-  return <><PageIntro eyebrow={copy.eyebrow} title={copy.about} text={profile.summary[language]}/><section className="resume-section page-section"><SectionHeading number="01" title={copy.education}/><div>{education.map((item) => <article className="resume-entry" key={item.school.en}><div className="entry-meta"><time>{item.period}</time><span>{item.location[language]}</span></div><div className="entry-body"><h3>{item.school[language]}</h3><p className="organization">{item.degree[language]}</p><p className="entry-description">{item.details[language]}</p></div></article>)}</div></section><section className="resume-section"><SectionHeading number="02" title={copy.experience}/><div>{experience.length ? experience.map((item, index) => <article className="resume-entry" key={index}><div className="entry-meta"><time>{item.period[language]}</time><span>{item.location[language]}</span></div><div className="entry-body"><h3>{item.role[language]}</h3><p className="organization">{item.organization[language]}</p><ul>{item.highlights[language].map((highlight) => <li key={highlight}>{highlight}</li>)}</ul></div></article>) : <ResearchCard language={language}/>}</div></section>{skillGroups.length > 0 && <section className="resume-section"><SectionHeading number="03" title={copy.skills}/><div className="skills-grid">{skillGroups.map((group) => { const items = Array.isArray(group.items) ? group.items : group.items[language]; return <div className="skill-group" key={group.label.en}><h3>{group.label[language]}</h3><p>{items.join(' · ')}</p></div> })}</div></section>}<section className="resume-section"><SectionHeading number={skillGroups.length ? '04' : '03'} title={copy.cv}/><div>{profile.resumeUrl ? <a className="button secondary-button" href={profile.resumeUrl}>{copy.cv} ↓</a> : <p className="empty-state">{language === 'zh' ? 'CV 链接将在文件确认后提供。' : 'A CV link will be added once the file is confirmed.'}</p>}</div></section><Contact language={language}/></>
+  return <><PageIntro title={copy.about} text={profile.summary[language]}/><section className="resume-section page-section"><SectionHeading title={copy.education}/><div>{education.map((item) => <article className="resume-entry" key={item.school.en}><div className="entry-meta">{item.period && <time>{item.period}</time>}<span>{item.location[language]}</span></div><div className="entry-body"><h3>{item.school[language]}</h3><p className="organization">{item.degree[language]}</p>{item.details[language] && <p className="entry-description">{item.details[language]}</p>}</div></article>)}</div></section><section className="resume-section"><SectionHeading title={copy.experience}/><div>{experience.length ? experience.map((item, index) => <article className="resume-entry" key={index}><div className="entry-meta"><time>{item.period[language]}</time><span>{item.location[language]}</span></div><div className="entry-body"><h3>{item.role[language]}</h3><p className="organization">{item.organization[language]}</p><ul>{item.highlights[language].map((highlight) => <li key={highlight}>{highlight}</li>)}</ul></div></article>) : <ResearchCard language={language}/>}</div></section>{skillGroups.length > 0 && <section className="resume-section"><SectionHeading title={copy.skills}/><div className="skills-grid">{skillGroups.map((group) => { const items = Array.isArray(group.items) ? group.items : group.items[language]; return <div className="skill-group" key={group.label.en}><h3>{group.label[language]}</h3><p>{items.join(' · ')}</p></div> })}</div></section>}<section className="resume-section"><SectionHeading title={copy.cv}/><div><a className="button secondary-button" href="/cv.html">{language === 'zh' ? '查看 HTML CV' : 'View HTML CV'} →</a></div></section><Contact language={language}/></>
 }
 
 function NotFound({ language, navigate }: { language: Language; navigate: Navigate }) {
@@ -142,7 +170,7 @@ function App() {
   const copy = ui[language]
 
   useEffect(() => { document.documentElement.lang = language === 'zh' ? 'zh-CN' : 'en'; localStorage.setItem('language', language) }, [language])
-  useEffect(() => { document.documentElement.dataset.theme = theme; document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#151617' : '#f5f4ef'); localStorage.setItem('theme', theme) }, [theme])
+  useEffect(() => { document.documentElement.dataset.theme = theme; document.querySelector('meta[name="theme-color"]')?.setAttribute('content', theme === 'dark' ? '#1f1e1b' : '#f7f5f2'); localStorage.setItem('theme', theme) }, [theme])
   useEffect(() => { const pageName = path.split('/').filter(Boolean).pop()?.replaceAll('-', ' '); document.title = path === '/' ? `${profile.name} — Personal Website` : `${pageName} — ${profile.name}`; document.querySelector('meta[name="description"]')?.setAttribute('content', profile.summary[language] || `${profile.name} — ${profile.role[language]}. Projects, research, and writing.`) }, [path, language])
 
   const content = useMemo(() => {
@@ -152,7 +180,7 @@ function App() {
     if (path === '/research') return <ResearchPage language={language}/>
     if (path === '/writing') return <WritingPage language={language} navigate={navigate}/>
     if (path.startsWith('/writing/')) { const item = articles.find((article) => article.slug === path.split('/')[2]); return item ? <ArticlePage article={item} language={language} navigate={navigate}/> : <NotFound language={language} navigate={navigate}/> }
-    if (path === '/about') return <AboutPage language={language}/>
+    if (path === '/about') return <AboutPage language={language} navigate={navigate}/>
     return <NotFound language={language} navigate={navigate}/>
   }, [path, language])
 

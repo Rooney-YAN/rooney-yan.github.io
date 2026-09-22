@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="en" data-language="en" data-theme="light">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="YAN Zhixiang curriculum vitae" />
+    <meta name="theme-color" content="#f7f5f2" />
+    <title>CV — YAN Zhixiang</title>
+    <style>
+      :root {
+        color-scheme: light;
+        --page: #f7f5f2;
+        --text: #2f2d29;
+        --muted: #6f6a63;
+        --quiet: #918b82;
+        --line: #dcd7cf;
+        --accent: #b95738;
+      }
+
+      :root[data-theme="dark"] {
+        color-scheme: dark;
+        --page: #1f1e1b;
+        --text: #eeeae3;
+        --muted: #b8b1a7;
+        --quiet: #8f887f;
+        --line: #3b3833;
+        --accent: #d97858;
+      }
+
+      * { box-sizing: border-box; }
+      html { background: var(--page); }
+      body {
+        margin: 0;
+        color: var(--text);
+        background: var(--page);
+        font-family: "Iowan Old Style", "Palatino Linotype", "Noto Serif SC", Georgia, serif;
+        line-height: 1.6;
+      }
+      a { color: inherit; text-decoration: none; }
+      a:hover, button:hover { color: var(--accent); }
+      button { font: inherit; }
+      .lang-zh { display: none; }
+      :root[data-language="zh"] .lang-en { display: none; }
+      :root[data-language="zh"] .lang-zh { display: inline; }
+
+      .page { width: min(calc(100% - 40px), 780px); margin: 0 auto; padding: 34px 0 64px; }
+      .toolbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid var(--line);
+        font-family: Inter, "Noto Sans SC", sans-serif;
+        font-size: 13px;
+      }
+      .toolbar-actions { display: flex; align-items: center; gap: 18px; }
+      .toolbar button, .toolbar a {
+        padding: 2px 0;
+        border: 0;
+        border-bottom: 1px solid var(--line);
+        color: var(--muted);
+        background: transparent;
+        cursor: pointer;
+      }
+      .cv-header { padding: 42px 0 32px; border-bottom: 1px solid var(--line); }
+      .cv-header h1 { margin: 0; font-size: clamp(44px, 8vw, 64px); font-weight: 400; letter-spacing: -.045em; line-height: 1; }
+      .cv-header > p { margin: 14px 0 0; color: var(--muted); font-size: 18px; }
+      .contact { display: flex; flex-wrap: wrap; gap: 8px 22px; margin-top: 20px; font-family: Inter, "Noto Sans SC", sans-serif; font-size: 13px; }
+      .contact a { color: var(--muted); border-bottom: 1px solid var(--line); }
+      .contact a::after { content: "↗"; margin-left: 4px; font-size: .9em; }
+      .contact a:first-child::after { content: ""; margin: 0; }
+
+      section { padding: 28px 0; border-bottom: 1px solid var(--line); }
+      section > h2 { margin: 0 0 8px; color: var(--accent); font-family: Inter, "Noto Sans SC", sans-serif; font-size: 14px; font-weight: 600; }
+      .entry { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 28px; padding: 16px 0; }
+      .entry + .entry { border-top: 1px solid var(--line); }
+      .entry h3 { margin: 0; font-size: 20px; font-weight: 500; line-height: 1.35; }
+      .entry p { margin: 5px 0 0; color: var(--muted); font-size: 15px; }
+      .entry time, .location { color: var(--quiet); font-family: Inter, "Noto Sans SC", sans-serif; font-size: 12px; }
+      .entry ul { margin: 12px 0 0; padding-left: 1.15em; color: var(--muted); font-size: 14px; line-height: 1.65; }
+      .entry li + li { margin-top: 5px; }
+      .skills { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px 34px; padding-top: 10px; }
+      .skills h3 { margin: 0; font-family: Inter, "Noto Sans SC", sans-serif; font-size: 13px; font-weight: 600; }
+      .skills p { margin: 4px 0 0; color: var(--muted); font-size: 14px; }
+
+      @media (max-width: 620px) {
+        .page { width: min(calc(100% - 32px), 780px); padding-top: 22px; }
+        .toolbar { align-items: flex-start; }
+        .toolbar-actions { flex-wrap: wrap; justify-content: flex-end; gap: 10px 16px; }
+        .cv-header { padding-top: 34px; }
+        .entry { grid-template-columns: 1fr; gap: 7px; }
+        .skills { grid-template-columns: 1fr; }
+      }
+
+      @media print {
+        @page { margin: 13mm; }
+        :root, :root[data-theme="dark"] {
+          color-scheme: light;
+          --page: #fff;
+          --text: #000;
+          --muted: #333;
+          --quiet: #555;
+          --line: #bbb;
+          --accent: #000;
+        }
+        .page { width: 100%; padding: 0; }
+        .toolbar { display: none; }
+        .cv-header { padding-top: 0; }
+        .cv-header h1 { font-size: 38px; }
+        section { padding: 18px 0; break-inside: avoid; }
+        .entry { padding: 10px 0; break-inside: avoid; }
+        .entry p, .entry ul { font-size: 12.5px; line-height: 1.45; }
+      }
+    </style>
+  </head>
+  <body>
+    <!--
+      MANUAL EDITING GUIDE
+      1. Change visible text directly inside the matching lang-zh or lang-en element.
+      2. Duplicate one complete article.entry block to add an education, project, or award item.
+      3. Keep opening and closing tags paired. An opening <ul> needs a closing </ul>.
+      4. Run pnpm run dev, open the local URL it prints, and append /cv.html.
+    -->
+    <main class="page">
+      <nav class="toolbar" aria-label="CV controls">
+        <a href="/"><span class="lang-zh">← 返回主页</span><span class="lang-en">← Back to website</span></a>
+        <div class="toolbar-actions">
+          <button id="language-button" type="button">中文</button>
+          <button id="theme-button" type="button"><span class="lang-zh">深色</span><span class="lang-en">Dark</span></button>
+          <button type="button" onclick="window.print()"><span class="lang-zh">打印 / 导出 PDF</span><span class="lang-en">Print / Save as PDF</span></button>
+        </div>
+      </nav>
+
+      <header class="cv-header">
+        <h1>YAN Zhixiang</h1>
+        <p><span class="lang-zh">香港科技大学 · 计算机科学工学学士</span><span class="lang-en">BEng in Computer Science · HKUST</span></p>
+        <div class="contact">
+          <a href="mailto:zyanbs@connect.ust.hk">zyanbs@connect.ust.hk</a>
+          <a href="https://github.com/Rooney-YAN">GitHub</a>
+          <a href="https://www.linkedin.com/in/zhixiang-yan-2302ab3aa/">LinkedIn</a>
+        </div>
+      </header>
+
+      <section>
+        <h2><span class="lang-zh">教育</span><span class="lang-en">Education</span></h2>
+        <article class="entry">
+          <div>
+            <h3><span class="lang-zh">香港科技大学</span><span class="lang-en">The Hong Kong University of Science and Technology</span></h3>
+            <p><span class="lang-zh">计算机科学工学学士 · 预计 2029 年毕业</span><span class="lang-en">Bachelor of Engineering in Computer Science · Expected 2029</span></p>
+            <span class="location"><span class="lang-zh">中国香港</span><span class="lang-en">Hong Kong</span></span>
+            <ul>
+              <li><span class="lang-zh">荣誉：优秀入学奖学金；院长嘉许名单（2025 年秋季、2026 年春季）</span><span class="lang-en">Honors: Merit-based Entrance Scholarship; Dean's List (Fall 2025 and Spring 2026)</span></li>
+              <li><span class="lang-zh">相关课程：人工智能导论、线性代数、Python 程序设计、C++ 程序设计</span><span class="lang-en">Coursework: Introduction to AI, Linear Algebra, Python Programming, Programming with C++</span></li>
+            </ul>
+          </div>
+          <time>2025 — 2029</time>
+        </article>
+        <article class="entry">
+          <div>
+            <h3><span class="lang-zh">长郡中学</span><span class="lang-en">Changjun High School</span></h3>
+            <p><span class="lang-zh">普通高中教育</span><span class="lang-en">High School Diploma</span></p>
+            <span class="location"><span class="lang-zh">中国湖南长沙</span><span class="lang-en">Changsha, Hunan, China</span></span>
+          </div>
+          <time>2022 — 2025</time>
+        </article>
+      </section>
+
+      <section>
+        <h2><span class="lang-zh">项目</span><span class="lang-en">Projects</span></h2>
+        <article class="entry">
+          <div>
+            <h3><span class="lang-zh">AI 驱动的知识总结工具</span><span class="lang-en">AI-Powered Knowledge Summarization Tool</span></h3>
+            <ul>
+              <li><span class="lang-zh">构建基于 Python 与大语言模型的处理流程，自动完成文档摘要与结构化信息提取。</span><span class="lang-en">Built a Python-based LLM pipeline for automated document summarization and structured information extraction.</span></li>
+              <li><span class="lang-zh">结合提示词工程、LLM API 与数据预处理，将非结构化内容转换为结构化 Markdown 知识。</span><span class="lang-en">Integrated prompt engineering, LLM APIs, and data preprocessing to transform unstructured content into structured Markdown knowledge.</span></li>
+            </ul>
+          </div>
+        </article>
+        <article class="entry">
+          <div>
+            <h3><span class="lang-zh">AI 辅助量化股票形态分析平台</span><span class="lang-en">AI-Assisted Quantitative Stock Pattern Analysis Platform</span></h3>
+            <ul>
+              <li><span class="lang-zh">开发 Python 量化研究平台，检索与用户所选 K 线窗口相似的历史 OHLCV 形态。</span><span class="lang-en">Developed a Python quantitative research platform for retrieving historical OHLCV patterns similar to user-selected candlestick windows.</span></li>
+              <li><span class="lang-zh">结合历史形态检索与大语言模型分析，解释相似价格走势对应的公司及市场环境。</span><span class="lang-en">Combined historical pattern retrieval with LLM-based analysis to interpret company and market conditions surrounding similar price movements.</span></li>
+            </ul>
+          </div>
+        </article>
+      </section>
+
+      <section>
+        <h2><span class="lang-zh">奖项与荣誉</span><span class="lang-en">Awards</span></h2>
+        <article class="entry">
+          <div>
+            <h3><span class="lang-zh">北京大学光华管理学院 2024 夏令营</span><span class="lang-en">Peking University Guanghua School of Management 2024 Summer Camp</span></h3>
+            <p><span class="lang-zh">组长 · 中国北京</span><span class="lang-en">Team Leader · Beijing, China</span></p>
+            <ul>
+              <li><span class="lang-zh">组织团队讨论与商业主题展示准备。</span><span class="lang-en">Led team discussions and presentation preparation for a business-oriented activity.</span></li>
+              <li><span class="lang-zh">获“优秀营员”。</span><span class="lang-en">Received Outstanding Participant (First Prize).</span></li>
+            </ul>
+          </div>
+          <time><span class="lang-zh">2024 年 8 月</span><span class="lang-en">August 2024</span></time>
+        </article>
+        <article class="entry">
+          <div>
+            <h3><span class="lang-zh">第 20 届“外研社杯”外语演讲比赛</span><span class="lang-en">The 20th Foreign Language Press Cup Foreign Language Speech Competition</span></h3>
+            <p><span class="lang-zh">学生参赛者 · 中国湖南</span><span class="lang-en">Student Participant · Hunan, China</span></p>
+            <ul>
+              <li><span class="lang-zh">获一等奖。</span><span class="lang-en">Received First Prize.</span></li>
+            </ul>
+          </div>
+          <time><span class="lang-zh">2024 年 1 月</span><span class="lang-en">January 2024</span></time>
+        </article>
+      </section>
+
+      <section>
+        <h2><span class="lang-zh">技能</span><span class="lang-en">Skills</span></h2>
+        <div class="skills">
+          <div><h3><span class="lang-zh">编程语言</span><span class="lang-en">Programming</span></h3><p>Python · C++ · SQL</p></div>
+          <div><h3><span class="lang-zh">工具</span><span class="lang-en">Tools</span></h3><p>Git · GitHub</p></div>
+          <div><h3><span class="lang-zh">办公软件</span><span class="lang-en">Office</span></h3><p>PowerPoint · Excel · Word</p></div>
+          <div><h3><span class="lang-zh">技术</span><span class="lang-en">Technologies</span></h3><p>Markdown · LaTeX</p></div>
+          <div><h3><span class="lang-zh">语言</span><span class="lang-en">Languages</span></h3><p><span class="lang-zh">普通话（母语） · 英语（流利） · 粤语（基础）</span><span class="lang-en">Mandarin (Native) · English (Fluent) · Cantonese (Basic)</span></p></div>
+          <div><h3><span class="lang-zh">兴趣</span><span class="lang-en">Interests</span></h3><p><span class="lang-zh">人工智能与新兴技术 · 量化金融 · 摄影 · 健身 · 爵士鼓 · 吉他</span><span class="lang-en">AI and Emerging Technologies · Quantitative Finance · Photography · Working Out · Jazz Drums · Guitar</span></p></div>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      const root = document.documentElement
+      const languageButton = document.getElementById('language-button')
+      const themeButton = document.getElementById('theme-button')
+
+      function applyLanguage(language) {
+        root.dataset.language = language
+        root.lang = language === 'zh' ? 'zh-CN' : 'en'
+        languageButton.textContent = language === 'zh' ? 'EN' : '中文'
+        localStorage.setItem('language', language)
+      }
+
+      function applyTheme(theme) {
+        root.dataset.theme = theme
+        document.querySelector('meta[name="theme-color"]').content = theme === 'dark' ? '#1f1e1b' : '#f7f5f2'
+        themeButton.querySelector('.lang-zh').textContent = theme === 'dark' ? '浅色' : '深色'
+        themeButton.querySelector('.lang-en').textContent = theme === 'dark' ? 'Light' : 'Dark'
+        localStorage.setItem('theme', theme)
+      }
+
+      const savedLanguage = localStorage.getItem('language')
+      const savedTheme = localStorage.getItem('theme')
+      applyLanguage(savedLanguage === 'zh' || savedLanguage === 'en' ? savedLanguage : (navigator.language.toLowerCase().startsWith('zh') ? 'zh' : 'en'))
+      applyTheme(savedTheme === 'dark' || savedTheme === 'light' ? savedTheme : (matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'))
+
+      languageButton.addEventListener('click', () => applyLanguage(root.dataset.language === 'zh' ? 'en' : 'zh'))
+      themeButton.addEventListener('click', () => applyTheme(root.dataset.theme === 'dark' ? 'light' : 'dark'))
+    </script>
+  </body>
+</html>

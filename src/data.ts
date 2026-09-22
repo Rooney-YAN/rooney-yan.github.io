@@ -7,6 +7,7 @@ export const profile = {
   role: { zh: '香港科技大学 · 计算机科学工学士', en: 'BEng in Computer Science · HKUST' } satisfies LocalizedText,
   location: { zh: '中国香港', en: 'Hong Kong' } satisfies LocalizedText,
   email: 'zyanbs@connect.ust.hk',
+  wechatId: 'Essential_Yan',
   summary: {
     // Add your own introduction here when it is ready.
     zh: '',
@@ -14,7 +15,7 @@ export const profile = {
   } satisfies LocalizedText,
   focus: ['AI Systems', 'Quantitative Finance', 'Technology & Ideas'],
   availability: { zh: '正在香港科技大学学习与研究。', en: 'Studying and conducting research at HKUST.' } satisfies LocalizedText,
-  resumeUrl: '',
+  resumeUrl: '/cv',
   photoUrl: '/Profile.jpg',
   links: [
     { label: 'GitHub', href: 'https://github.com/Rooney-YAN' },
@@ -34,17 +35,67 @@ export type Project = {
   description: LocalizedText
   status: LocalizedText
   technologies: string[]
+  highlights?: LocalizedText[]
   github?: string
   demo?: string
   selected: boolean
 }
 
-const detailsPending = { zh: '项目资料整理中；详情将随项目进展补充。', en: 'Project notes are being organized; details will be added as the work develops.' } satisfies LocalizedText
-
 export const projects: Project[] = [
-  { slug: 'stocklens', title: 'StockLens', description: detailsPending, status: { zh: '进行中', en: 'In progress' }, technologies: [], selected: true },
-  { slug: 'ai-knowledge-tool', title: 'AI Knowledge Tool', description: detailsPending, status: { zh: '进行中', en: 'In progress' }, technologies: [], selected: true },
-  { slug: 'dailymodule', title: 'DailyModule', description: detailsPending, status: { zh: '进行中', en: 'In progress' }, technologies: [], selected: true },
+  {
+    slug: 'noteloop',
+    title: 'NoteLoop',
+    description: {
+      zh: '浏览器端学习诊断工具，对照课程 PDF 与个人笔记，生成知识覆盖分析、针对性测验和可追加的 Markdown 修订建议。',
+      en: 'A browser-based study diagnostic tool that compares course PDFs with personal notes, then generates coverage analysis, targeted quizzes, and append-only Markdown corrections.',
+    },
+    status: { zh: '可用演示', en: 'Working demo' },
+    technologies: ['Next.js', 'TypeScript', 'Zod', 'PDF.js'],
+    highlights: [
+      { zh: '将课程材料和学习笔记分别结构化分析，再生成知识覆盖图。', en: 'Analyzes course material and student notes separately before producing a structured coverage map.' },
+      { zh: '生成六道经二次模型审查的测验，并根据答题结果诊断误解与信心度。', en: 'Generates a six-question quiz reviewed by a second model pass, then diagnoses misconceptions and confidence.' },
+      { zh: '支持 OpenAI 与 DeepSeek；PDF 文本在本地提取，模型输出经 Zod 校验。', en: 'Supports OpenAI and DeepSeek, with local PDF text extraction and Zod-validated model output.' },
+    ],
+    github: 'https://github.com/Rooney-YAN/NoteLoop',
+    demo: 'https://rooney-yan.github.io/NoteLoop/',
+    selected: true,
+  },
+  {
+    slug: 'dailymodule',
+    title: 'DailyModule',
+    description: {
+      zh: '模块化个人时间管理工具，用日、周、月视图组织时间块，并将计划、专注与复盘放在同一工作流中。',
+      en: 'A modular personal planning tool that organizes time blocks across day, week, and month views, connecting planning, focus, and review in one workflow.',
+    },
+    status: { zh: '持续开发', en: 'In active development' },
+    technologies: ['React', 'TypeScript', 'Vite', 'Supabase'],
+    highlights: [
+      { zh: '支持时间块模板、冲突检测、周计划、进度跟踪与专注视图。', en: 'Supports reusable time-block templates, conflict detection, weekly planning, progress tracking, and a focus view.' },
+      { zh: '可导入 ICS 课程表，并导入或导出 JSON 备份。', en: 'Imports ICS calendars and supports JSON backup and restore.' },
+      { zh: '默认使用浏览器本地存储，可选启用 Supabase 跨设备同步。', en: 'Stores data locally by default, with optional Supabase cross-device synchronization.' },
+    ],
+    github: 'https://github.com/Rooney-YAN/DailyModule',
+    demo: 'https://rooney-yan.github.io/DailyModule/',
+    selected: true,
+  },
+  {
+    slug: 'gitmaster',
+    title: 'GitMaster',
+    description: {
+      zh: '互动式 Git 与 GitHub 学习平台，通过浏览器内状态引擎、虚拟终端和协作流程模拟器，让初学者在操作中理解 Git。',
+      en: 'An interactive Git and GitHub learning platform that uses an in-browser state engine, virtual terminal, and collaboration workflow simulator to teach by doing.',
+    },
+    status: { zh: 'Portfolio MVP', en: 'Portfolio MVP' },
+    technologies: ['Next.js', 'TypeScript', 'React Flow', 'Monaco Editor'],
+    highlights: [
+      { zh: '提供 24 节结构化课程、XP 与章节解锁，学习进度保存在浏览器中。', en: 'Provides 24 structured lessons with XP, chapter unlocking, and browser-persisted learning progress.' },
+      { zh: '在安全沙盒中模拟 Git 命令，实时可视化工作区、暂存区与提交图变化。', en: 'Simulates Git commands in a safe sandbox and visualizes working-tree, staging-area, and commit-graph changes.' },
+      { zh: '模拟 Fork、分支、Pull Request、Code Review 与 Merge 等完整团队协作流程。', en: 'Walks learners through a full collaboration flow covering forks, branches, pull requests, code review, and merge gates.' },
+    ],
+    github: 'https://github.com/Rooney-YAN/GitMaster',
+    demo: 'https://rooney-yan.github.io/GitMaster/',
+    selected: true,
+  },
 ]
 
 export const research = [
@@ -62,11 +113,18 @@ export const experience: Array<{
 
 export const education = [
   {
-    period: '2023 — 2027',
+    period: '2025 — 2029',
     location: { zh: '中国香港', en: 'Hong Kong' } satisfies LocalizedText,
     school: { zh: '香港科技大学', en: 'The Hong Kong University of Science and Technology' } satisfies LocalizedText,
-    degree: { zh: '计算机科学', en: 'Computer Science' } satisfies LocalizedText,
-    details: { zh: '本科在读。', en: 'Undergraduate student.' } satisfies LocalizedText,
+    degree: { zh: '计算机科学工学学士', en: 'Bachelor of Engineering in Computer Science · Expected 2029' } satisfies LocalizedText,
+    details: { zh: '', en: '' } satisfies LocalizedText,
+  },
+  {
+    period: '2022 — 2025',
+    location: { zh: '中国湖南长沙', en: 'Changsha, Hunan, China' } satisfies LocalizedText,
+    school: { zh: '长郡中学', en: 'Changjun High School' } satisfies LocalizedText,
+    degree: { zh: '普通高中教育', en: 'High School Diploma' } satisfies LocalizedText,
+    details: { zh: '', en: '' } satisfies LocalizedText,
   },
 ]
 
