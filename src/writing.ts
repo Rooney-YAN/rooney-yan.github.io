@@ -4,7 +4,7 @@ export type Article = {
   slug: string
   title: string
   date: string
-  category: 'Technology' | 'Markets' | 'Ideas'
+  category: 'Build' | 'Think' | 'Life'
   tags: string[]
   language: Language | 'both'
   excerpt: string
@@ -29,7 +29,7 @@ function parseFrontMatter(source: string, fallbackSlug: string): Article | null 
   if (!values.title || !values.date || !values.category || !values.language) return null
   const category = values.category as Article['category']
   const language = values.language as Article['language']
-  if (!['Technology', 'Markets', 'Ideas'].includes(category) || !['zh', 'en', 'both'].includes(language)) return null
+  if (!['Build', 'Think', 'Life'].includes(category) || !['zh', 'en', 'both'].includes(language)) return null
   return {
     slug: values.slug || fallbackSlug,
     title: values.title,

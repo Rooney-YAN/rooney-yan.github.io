@@ -5,6 +5,7 @@ import { Markdown } from './Markdown'
 
 type Theme = 'light' | 'dark'
 type Navigate = (to: string) => void
+const categoryLabels = { Build: { zh: '构建', en: 'Build' }, Think: { zh: '思考', en: 'Think' }, Life: { zh: '生活', en: 'Life' } } as const
 
 function initialLanguage(): Language {
   const saved = localStorage.getItem('language')
@@ -98,7 +99,7 @@ function WritingList({ items, language, navigate }: { items: Article[]; language
   const visible = items.filter((article) => article.language === language || article.language === 'both')
   if (!visible.length) return <p className="empty-state">{copy.noWriting}</p>
   return <div className="writing-list">{visible.map((article) => <article className="writing-row" key={article.slug}>
-    <div className="writing-meta"><time dateTime={article.date}>{article.date}</time><span>{article.category}</span></div>
+    <div className="writing-meta"><time dateTime={article.date}>{article.date}</time><span>{categoryLabels[article.category][language]}</span></div>
     <div><h3><Link to={`/writing/${article.slug}`} navigate={navigate}>{article.title}</Link></h3><p>{article.excerpt}</p><ul className="tag-list">{article.tags.map((tag) => <li key={tag}>{tag}</li>)}</ul></div>
     <Link className="row-arrow" to={`/writing/${article.slug}`} navigate={navigate} label={`${copy.readArticle}: ${article.title}`}>→</Link>
   </article>)}</div>
@@ -150,7 +151,7 @@ function WritingPage({ language, navigate }: { language: Language; navigate: Nav
 
 function ArticlePage({ article, language, navigate }: { article: Article; language: Language; navigate: Navigate }) {
   const copy = ui[language]
-  return <article className="article-page"><header><Link className="back-link" to="/writing" navigate={navigate}>← {copy.allWriting}</Link><h1>{article.title}</h1><p className="article-excerpt">{article.excerpt}</p><div className="article-meta"><span>{article.category}</span><time dateTime={article.date}>{article.date}</time><span>{article.tags.join(' · ')}</span></div></header><div className="prose"><Markdown source={article.content}/></div></article>
+  return <article className="article-page"><header><Link className="back-link" to="/writing" navigate={navigate}>← {copy.allWriting}</Link><h1>{article.title}</h1><p className="article-excerpt">{article.excerpt}</p><div className="article-meta"><span>{categoryLabels[article.category][language]}</span><time dateTime={article.date}>{article.date}</time><span>{article.tags.join(' · ')}</span></div></header><div className="prose"><Markdown source={article.content}/></div></article>
 }
 
 function AboutPage({ language, navigate }: { language: Language; navigate: Navigate }) {
