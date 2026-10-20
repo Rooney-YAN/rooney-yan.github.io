@@ -263,7 +263,7 @@ a:hover .external-arrow, button:hover .external-arrow { transform: translate(2px
 .article-page { max-width: 760px; margin: 0; padding: 70px 0 88px; }
 .article-page header { padding-bottom: 38px; border-bottom: 1px solid var(--line); }
 .article-page .back-link { display: inline-block; margin: 0 0 44px; color: var(--quiet); font-family: Inter, "Noto Sans SC", sans-serif; font-size: 14px; }
-.article-page h1 { font-size: clamp(43px, 7vw, 72px); text-transform: none; }
+.article-page h1 { font-size: clamp(30px, 4vw, 50px); text-transform: none; }
 .article-excerpt { margin: 24px 0 0; color: var(--muted); font-size: 17px; line-height: 1.75; }
 .article-meta { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 22px; color: var(--quiet); font-family: Inter, "Noto Sans SC", sans-serif; font-size: 13px; }
 .prose { padding-top: 48px; font-family: Georgia, "Noto Serif SC", serif; font-size: 17px; line-height: 1.9; }

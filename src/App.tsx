@@ -120,7 +120,7 @@ function Home({ language, navigate }: { language: Language; navigate: Navigate }
     <section className="resume-section"><SectionHeading title={copy.currently} id="currently-title"/><div className="currently-grid">{currently.map((item) => <div className="current-item" key={item.label.en}><span>{item.label[language]}</span><p>{item.text[language]}</p></div>)}</div></section>
     <section className="resume-section projects-section"><SectionHeading title={copy.selectedProjects}/><div><div className="project-grid">{projects.filter((p) => p.selected).map((project) => <ProjectCard key={project.slug} project={project} language={language} navigate={navigate}/>)}</div><Link className="section-link" to="/projects" navigate={navigate}>{copy.viewAll} →</Link></div></section>
     <section className="resume-section"><SectionHeading title={copy.research}/><div><ResearchCard language={language}/><Link className="section-link" to="/research" navigate={navigate}>{copy.viewAll} →</Link></div></section>
-    <section className="resume-section"><SectionHeading title={copy.recentWriting}/><div><WritingList items={articles.slice(0, 3)} language={language} navigate={navigate}/><Link className="section-link" to="/writing" navigate={navigate}>{copy.viewAll} →</Link></div></section>
+    <section className="resume-section"><SectionHeading title={copy.recentWriting}/><div><WritingList items={articles.filter((article) => article.language === language || article.language === 'both').slice(0, 3)} language={language} navigate={navigate}/><Link className="section-link" to="/writing" navigate={navigate}>{copy.viewAll} →</Link></div></section>
     <Contact language={language}/>
   </>
 }
@@ -180,7 +180,7 @@ function App() {
     if (path.startsWith('/projects/')) { const item = projects.find((project) => project.slug === path.split('/')[2]); return item ? <ProjectPage project={item} language={language} navigate={navigate}/> : <NotFound language={language} navigate={navigate}/> }
     if (path === '/research') return <ResearchPage language={language}/>
     if (path === '/writing') return <WritingPage language={language} navigate={navigate}/>
-    if (path.startsWith('/writing/')) { const item = articles.find((article) => article.slug === path.split('/')[2]); return item ? <ArticlePage article={item} language={language} navigate={navigate}/> : <NotFound language={language} navigate={navigate}/> }
+    if (path.startsWith('/writing/')) { const slug = path.split('/')[2]; const item = articles.find((article) => article.slug === slug && (article.language === language || article.language === 'both')) ?? articles.find((article) => article.slug === slug); return item ? <ArticlePage article={item} language={language} navigate={navigate}/> : <NotFound language={language} navigate={navigate}/> }
     if (path === '/about') return <AboutPage language={language} navigate={navigate}/>
     return <NotFound language={language} navigate={navigate}/>
   }, [path, language])
