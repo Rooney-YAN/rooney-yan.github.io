@@ -31,9 +31,19 @@ export function Markdown({ source }: { source: string }) {
     const heading = line.match(/^(#{1,3})\s+(.+)$/)
     if (heading) {
       const level = heading[1].length
-      if (level === 1) blocks.push(<h2 key={blocks.length}>{inline(heading[2])}</h2>)
-      else if (level === 2) blocks.push(<h3 key={blocks.length}>{inline(heading[2])}</h3>)
-      else blocks.push(<h4 key={blocks.length}>{inline(heading[2])}</h4>)
+      if (level <= 2) blocks.push(<h2 key={blocks.length}>{inline(heading[2])}</h2>)
+      else blocks.push(<h3 key={blocks.length}>{inline(heading[2])}</h3>)
+      index += 1
+      continue
+    }
+    const image = line.match(/^!\[([^\]]*)\]\(([^)]+)\)(?:\s+"([^"]+)")?$/)
+    if (image) {
+      blocks.push(<figure key={blocks.length}><img src={image[2]} alt={image[1]} loading="lazy" />{image[3] && <figcaption>{image[3]}</figcaption>}</figure>)
+      index += 1
+      continue
+    }
+    if (/^(?:---|\*\*\*|___)\s*$/.test(line)) {
+      blocks.push(<hr key={blocks.length} />)
       index += 1
       continue
     }
@@ -52,7 +62,7 @@ export function Markdown({ source }: { source: string }) {
     if (line.startsWith('> ')) { blocks.push(<blockquote key={blocks.length}>{inline(line.slice(2))}</blockquote>); index += 1; continue }
     const paragraph = [line]
     index += 1
-    while (index < lines.length && lines[index].trim() && !/^(#{1,3})\s|^```|^[-*]\s+|^\d+\.\s+|^> /.test(lines[index])) { paragraph.push(lines[index]); index += 1 }
+    while (index < lines.length && lines[index].trim() && !/^(#{1,3})\s|^```|^[-*]\s+|^\d+\.\s+|^> |^!\[|^(?:---|\*\*\*|___)\s*$/.test(lines[index])) { paragraph.push(lines[index]); index += 1 }
     blocks.push(<p key={blocks.length}>{inline(paragraph.join(' '))}</p>)
   }
   return <>{blocks}</>

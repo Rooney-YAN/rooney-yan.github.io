@@ -274,6 +274,10 @@ a:hover .external-arrow, button:hover .external-arrow { transform: translate(2px
 .prose code { padding: .15em .35em; background: var(--surface-soft); font-family: ui-monospace, SFMono-Regular, Consolas, monospace; font-size: .88em; }
 .prose pre { overflow-x: auto; padding: 20px; background: var(--surface-soft); font-size: 13px; line-height: 1.65; }
 .prose pre code { padding: 0; background: transparent; }.prose blockquote { margin: 1.6em 0; padding-left: 20px; border-left: 2px solid var(--accent); color: var(--muted); }
+.prose figure { margin: 2.2em 0; }
+.prose figure img { display: block; width: 100%; height: auto; border: 1px solid var(--line); }
+.prose figcaption { margin-top: 9px; color: var(--quiet); font-family: Inter, "Noto Sans SC", sans-serif; font-size: 12px; line-height: 1.5; }
+.prose hr { height: 1px; margin: 2.5em 0; border: 0; background: var(--line); }
 .not-found { min-height: 70vh; display: grid; place-content: center; justify-items: center; gap: 30px; text-align: center; }
 .not-found h1 { margin: 0; }
 
@@ -327,6 +331,8 @@ footer a { justify-self: end; }
   .detail-row, .detail-links { grid-template-columns: 1fr; gap: 12px; }
   .research-card { padding: 21px 0; }
   .connect-section { align-items: flex-start; }
+  .prose figure { overflow-x: auto; }
+  .prose figure img { min-width: 640px; }
 }
 
 @media (max-width: 430px) {
