@@ -91,7 +91,7 @@ function ProjectCard({ project, language, navigate }: { project: Project; langua
 
 function ResearchCard({ language }: { language: Language }) {
   const item = research[0]
-  return <article className="research-card"><div><p className="card-kicker">{item.program}</p><h3>{item.title}</h3></div><span className="status-badge">{item.status[language]}</span></article>
+  return <article className="research-card"><div><p className="card-kicker">{item.program}</p><h3>{item.title}</h3><p className="research-supervisor">{ui[language].supervisor}: <ExternalLink href={item.supervisorUrl}>{item.supervisor[language]}</ExternalLink></p></div><span className="status-badge">{item.status[language]}</span></article>
 }
 
 function WritingList({ items, language, navigate }: { items: Article[]; language: Language; navigate: Navigate }) {
