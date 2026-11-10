@@ -10,7 +10,7 @@ export type Article = {
   content: string
 }
 
-export const categories = ['Tech', 'Research', 'Thoughts', 'Life'] as const
+export const categories = ['Tech', 'Research', 'Thoughts'] as const
 export type Category = (typeof categories)[number]
 
 const files = import.meta.glob('./content/writing/*.md', {

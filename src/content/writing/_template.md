@@ -11,5 +11,5 @@ excerpt: A short summary shown on the writing index.
 
 Write the article in Markdown here. Files beginning with an underscore are excluded from the public writing index.
 
-- `category` must be Tech, Research, Thoughts, or Life. Choose one category per article.
+- `category` must be Tech, Research, or Thoughts. Choose one category per article.
 - `language` must be zh, en, or both.
