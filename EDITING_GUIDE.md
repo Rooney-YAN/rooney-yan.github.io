@@ -33,6 +33,8 @@ http://localhost:5173/
 
 `src/writing.ts` 只是读取并整理 Markdown 文章的程序，不是在里面写文章。通常只需要修改 `src/data.ts`、`src/content/writing/*.md` 和 `public/cv.html`，不要随意修改 `App.tsx` 或 `writing.ts`。
 
+写作文章的 `category` 从 `Tech`、`Research`、`Thoughts`、`Life` 中选一个。`tags` 可不写，也可用英文逗号分隔多个标签；写作页会自动汇总、去重，并支持与分类组合筛选。
+
 ## 3. 修改姓名和联系方式
 
 打开 `src/data.ts`，找到：

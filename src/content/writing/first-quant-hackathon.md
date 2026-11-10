@@ -2,7 +2,7 @@
 title: 第一次 Quant Hackathon：我的成长与反思
 slug: first-quant-hackathon
 date: 2026-10-22
-category: Think
+category: Thoughts
 tags: Quant, APAC Quant Trading Hackathon, AI, 交易
 language: zh
 excerpt: 从负收益冲到榜单前列，再回落到香港第七。这场比赛让我第一次认真审视回测里的偏差、多头策略的风险，以及自己的判断。

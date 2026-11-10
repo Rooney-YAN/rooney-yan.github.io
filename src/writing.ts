@@ -4,12 +4,15 @@ export type Article = {
   slug: string
   title: string
   date: string
-  category: 'Build' | 'Think' | 'Life'
+  category: Category
   tags: string[]
   language: Language | 'both'
   excerpt: string
   content: string
 }
+
+export const categories = ['Tech', 'Research', 'Thoughts', 'Life'] as const
+export type Category = (typeof categories)[number]
 
 const files = import.meta.glob('./content/writing/*.md', {
   eager: true,
@@ -29,14 +32,14 @@ function parseFrontMatter(source: string, fallbackSlug: string): Article | null 
   if (!values.title || !values.date || !values.category || !values.language) return null
   const category = values.category as Article['category']
   const language = values.language as Article['language']
-  if (!['Build', 'Think', 'Life'].includes(category) || !['zh', 'en', 'both'].includes(language)) return null
+  if (!(categories as readonly string[]).includes(category) || !['zh', 'en', 'both'].includes(language)) return null
   return {
     slug: values.slug || fallbackSlug,
     title: values.title,
     date: values.date,
     category,
     language,
-    tags: values.tags ? values.tags.split(',').map((tag) => tag.trim()).filter(Boolean) : [],
+    tags: values.tags ? [...new Set(values.tags.split(',').map((tag) => tag.trim()).filter(Boolean))] : [],
     excerpt: values.excerpt || '',
     content: match[2].trim(),
   }

@@ -2,7 +2,7 @@
 title: 被误解是不是表达者的宿命
 slug: is-misunderstanding-inevitable
 date: 2026-11-10
-category: Think
+category: Thoughts
 language: zh
 ---
 
