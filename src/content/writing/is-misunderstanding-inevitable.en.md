@@ -88,8 +88,6 @@ In that sense, understanding and misunderstanding are two sides of the same coin
 
 Shinji gives the world back to humanity, and with it, the possibility of misunderstanding.
 
-I think he made the right choice.
-
 ---
 
 So misunderstanding cannot—and should not—be eliminated. What is a person trying to express themselves supposed to do with that?
