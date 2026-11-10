@@ -9,6 +9,11 @@ const writingFilterCopy = {
   zh: { all: '全部', empty: '这个分类下还没有文章。' },
   en: { all: 'All', empty: 'No articles in this category yet.' },
 } as const
+const categoryLabels: Record<Category, Record<Language, string>> = {
+  Tech: { zh: '技术', en: 'Tech' },
+  Research: { zh: '研究', en: 'Research' },
+  Thoughts: { zh: '思考', en: 'Thoughts' },
+}
 
 function writingFilterUrl(category: Category | null) {
   return category ? `/writing?category=${category}` : '/writing'
@@ -108,7 +113,7 @@ function WritingList({ items, language, navigate }: { items: Article[]; language
   const visible = items.filter((article) => article.language === language || article.language === 'both')
   if (!visible.length) return <p className="empty-state">{copy.noWriting}</p>
   return <div className="writing-list">{visible.map((article) => <article className="writing-row" key={article.slug}>
-    <div className="writing-meta"><time dateTime={article.date}>{article.date}</time><span>{article.category}</span></div>
+    <div className="writing-meta"><time dateTime={article.date}>{article.date}</time><span>{categoryLabels[article.category][language]}</span></div>
     <div><h3><Link to={`/writing/${article.slug}`} navigate={navigate}>{article.title}</Link></h3>{article.excerpt && <p>{article.excerpt}</p>}</div>
     <Link className="row-arrow" to={`/writing/${article.slug}`} navigate={navigate} label={`${copy.readArticle}: ${article.title}`}>→</Link>
   </article>)}</div>
@@ -167,7 +172,7 @@ function WritingPage({ language, navigate, search }: { language: Language; navig
     <div className="writing-filters">
       <div className="filter-tabs" aria-label={language === 'zh' ? '文章分类' : 'Article categories'}>
         <button type="button" className={!category ? 'selected' : ''} aria-pressed={!category} onClick={() => updateCategory(null)}>{filterCopy.all}</button>
-        {categories.map((item) => <button type="button" className={category === item ? 'selected' : ''} aria-pressed={category === item} onClick={() => updateCategory(item)} key={item}>{item}</button>)}
+        {categories.map((item) => <button type="button" className={category === item ? 'selected' : ''} aria-pressed={category === item} onClick={() => updateCategory(item)} key={item}>{categoryLabels[item][language]}</button>)}
       </div>
     </div>
     {filtered.length > 0 ? <WritingList items={filtered} language={language} navigate={navigate}/> : <p className="empty-state filter-empty">{filterCopy.empty}</p>}
@@ -176,7 +181,7 @@ function WritingPage({ language, navigate, search }: { language: Language; navig
 
 function ArticlePage({ article, language, navigate }: { article: Article; language: Language; navigate: Navigate }) {
   const copy = ui[language]
-  return <article className="article-page"><header><Link className="back-link" to="/writing" navigate={navigate}>← {copy.allWriting}</Link><h1>{article.title}</h1>{article.excerpt && article.showExcerptOnPage && <p className="article-excerpt">{article.excerpt}</p>}<div className="article-meta"><span>{article.category}</span><time dateTime={article.date}>{article.date}</time></div></header><div className="prose"><Markdown source={article.content}/></div></article>
+  return <article className="article-page"><header><Link className="back-link" to="/writing" navigate={navigate}>← {copy.allWriting}</Link><h1>{article.title}</h1>{article.excerpt && article.showExcerptOnPage && <p className="article-excerpt">{article.excerpt}</p>}<div className="article-meta"><span>{categoryLabels[article.category][language]}</span><time dateTime={article.date}>{article.date}</time></div></header><div className="prose"><Markdown source={article.content}/></div></article>
 }
 
 function AboutPage({ language, navigate }: { language: Language; navigate: Navigate }) {
