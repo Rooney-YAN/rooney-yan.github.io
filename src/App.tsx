@@ -6,15 +6,12 @@ import { Markdown } from './Markdown'
 type Theme = 'light' | 'dark'
 type Navigate = (to: string, options?: { scroll?: boolean }) => void
 const writingFilterCopy = {
-  zh: { all: '全部', tags: '标签', clear: '清除筛选', empty: '没有符合筛选条件的文章。' },
-  en: { all: 'All', tags: 'Tags', clear: 'Clear filters', empty: 'No articles match these filters.' },
+  zh: { all: '全部', empty: '这个分类下还没有文章。' },
+  en: { all: 'All', empty: 'No articles in this category yet.' },
 } as const
 
-function writingFilterUrl(category: Category | null, tags: string[]) {
-  const params = new URLSearchParams()
-  if (category) params.set('category', category)
-  tags.forEach((tag) => params.append('tag', tag))
-  return `/writing${params.size ? `?${params}` : ''}`
+function writingFilterUrl(category: Category | null) {
+  return category ? `/writing?category=${category}` : '/writing'
 }
 
 function initialLanguage(): Language {
@@ -106,13 +103,13 @@ function ResearchCard({ language }: { language: Language }) {
   return <article className="research-card"><div><p className="card-kicker">{item.program}</p><h3>{item.title}</h3><p className="research-supervisor">{ui[language].supervisor}: <ExternalLink href={item.supervisorUrl}>{item.supervisor[language]}</ExternalLink></p></div><span className="status-badge">{item.status[language]}</span></article>
 }
 
-function WritingList({ items, language, navigate, onTagClick, activeTags = [] }: { items: Article[]; language: Language; navigate: Navigate; onTagClick: (tag: string) => void; activeTags?: string[] }) {
+function WritingList({ items, language, navigate }: { items: Article[]; language: Language; navigate: Navigate }) {
   const copy = ui[language]
   const visible = items.filter((article) => article.language === language || article.language === 'both')
   if (!visible.length) return <p className="empty-state">{copy.noWriting}</p>
   return <div className="writing-list">{visible.map((article) => <article className="writing-row" key={article.slug}>
     <div className="writing-meta"><time dateTime={article.date}>{article.date}</time><span>{article.category}</span></div>
-    <div><h3><Link to={`/writing/${article.slug}`} navigate={navigate}>{article.title}</Link></h3>{article.excerpt && <p>{article.excerpt}</p>}{article.tags.length > 0 && <ul className="tag-list">{article.tags.map((tag) => <li key={tag}><button type="button" aria-pressed={activeTags.includes(tag)} onClick={() => onTagClick(tag)}>{tag}</button></li>)}</ul>}</div>
+    <div><h3><Link to={`/writing/${article.slug}`} navigate={navigate}>{article.title}</Link></h3>{article.excerpt && <p>{article.excerpt}</p>}</div>
     <Link className="row-arrow" to={`/writing/${article.slug}`} navigate={navigate} label={`${copy.readArticle}: ${article.title}`}>→</Link>
   </article>)}</div>
 }
@@ -132,7 +129,7 @@ function Home({ language, navigate }: { language: Language; navigate: Navigate }
     <section className="resume-section"><SectionHeading title={copy.currently} id="currently-title"/><div className="currently-grid">{currently.map((item) => <div className="current-item" key={item.label.en}><span>{item.label[language]}</span><p>{item.text[language]}</p></div>)}</div></section>
     <section className="resume-section projects-section"><SectionHeading title={copy.selectedProjects}/><div><div className="project-grid">{projects.filter((p) => p.selected).map((project) => <ProjectCard key={project.slug} project={project} language={language} navigate={navigate}/>)}</div><Link className="section-link" to="/projects" navigate={navigate}>{copy.viewAll} →</Link></div></section>
     <section className="resume-section"><SectionHeading title={copy.research}/><div><ResearchCard language={language}/><Link className="section-link" to="/research" navigate={navigate}>{copy.viewAll} →</Link></div></section>
-    <section className="resume-section"><SectionHeading title={copy.recentWriting}/><div><WritingList items={articles.filter((article) => article.language === language || article.language === 'both').slice(0, 3)} language={language} navigate={navigate} onTagClick={(tag) => navigate(writingFilterUrl(null, [tag]))}/><Link className="section-link" to="/writing" navigate={navigate}>{copy.viewAll} →</Link></div></section>
+    <section className="resume-section"><SectionHeading title={copy.recentWriting}/><div><WritingList items={articles.filter((article) => article.language === language || article.language === 'both').slice(0, 3)} language={language} navigate={navigate}/><Link className="section-link" to="/writing" navigate={navigate}>{copy.viewAll} →</Link></div></section>
     <Contact language={language}/>
   </>
 }
@@ -160,31 +157,26 @@ function WritingPage({ language, navigate, search }: { language: Language; navig
   const copy = ui[language]
   const filterCopy = writingFilterCopy[language]
   const available = articles.filter((article) => article.language === language || article.language === 'both')
-  const tags = [...new Set(available.flatMap((article) => article.tags))].sort((a, b) => a.localeCompare(b, language === 'zh' ? 'zh-CN' : 'en'))
   const params = new URLSearchParams(search)
   const requestedCategory = params.get('category')
   const category = categories.find((item) => item === requestedCategory) ?? null
-  const selectedTags = [...new Set(params.getAll('tag'))].filter((tag) => tags.includes(tag))
-  const filtered = available.filter((article) => (!category || article.category === category) && selectedTags.every((tag) => article.tags.includes(tag)))
-  const updateFilters = (nextCategory: Category | null, nextTags: string[]) => navigate(writingFilterUrl(nextCategory, nextTags), { scroll: false })
-  const toggleTag = (tag: string) => updateFilters(category, selectedTags.includes(tag) ? selectedTags.filter((item) => item !== tag) : [...selectedTags, tag])
+  const filtered = available.filter((article) => !category || article.category === category)
+  const updateCategory = (nextCategory: Category | null) => navigate(writingFilterUrl(nextCategory), { scroll: false })
 
   return <><PageIntro title={copy.writing}/><section className="page-section writing-section">
     <div className="writing-filters">
       <div className="filter-tabs" aria-label={language === 'zh' ? '文章分类' : 'Article categories'}>
-        <button type="button" className={!category ? 'selected' : ''} aria-pressed={!category} onClick={() => updateFilters(null, selectedTags)}>{filterCopy.all}</button>
-        {categories.map((item) => <button type="button" className={category === item ? 'selected' : ''} aria-pressed={category === item} onClick={() => updateFilters(item, selectedTags)} key={item}>{item}</button>)}
+        <button type="button" className={!category ? 'selected' : ''} aria-pressed={!category} onClick={() => updateCategory(null)}>{filterCopy.all}</button>
+        {categories.map((item) => <button type="button" className={category === item ? 'selected' : ''} aria-pressed={category === item} onClick={() => updateCategory(item)} key={item}>{item}</button>)}
       </div>
-      {tags.length > 0 && <div className="filter-tags"><span>{filterCopy.tags}</span><div className="filter-tag-list">{tags.map((tag) => <button type="button" className={selectedTags.includes(tag) ? 'selected' : ''} aria-pressed={selectedTags.includes(tag)} onClick={() => toggleTag(tag)} key={tag}>{tag}</button>)}</div></div>}
-      {(category || selectedTags.length > 0) && <button className="clear-filters" type="button" onClick={() => updateFilters(null, [])}>{filterCopy.clear} ↗</button>}
     </div>
-    {filtered.length > 0 ? <WritingList items={filtered} language={language} navigate={navigate} onTagClick={toggleTag} activeTags={selectedTags}/> : <p className="empty-state filter-empty">{filterCopy.empty}</p>}
+    {filtered.length > 0 ? <WritingList items={filtered} language={language} navigate={navigate}/> : <p className="empty-state filter-empty">{filterCopy.empty}</p>}
   </section></>
 }
 
 function ArticlePage({ article, language, navigate }: { article: Article; language: Language; navigate: Navigate }) {
   const copy = ui[language]
-  return <article className="article-page"><header><Link className="back-link" to="/writing" navigate={navigate}>← {copy.allWriting}</Link><h1>{article.title}</h1>{article.excerpt && <p className="article-excerpt">{article.excerpt}</p>}<div className="article-meta"><span>{article.category}</span><time dateTime={article.date}>{article.date}</time>{article.tags.length > 0 && <span className="article-tags">{article.tags.map((tag) => <button type="button" key={tag} onClick={() => navigate(writingFilterUrl(null, [tag]))}>{tag}</button>)}</span>}</div></header><div className="prose"><Markdown source={article.content}/></div></article>
+  return <article className="article-page"><header><Link className="back-link" to="/writing" navigate={navigate}>← {copy.allWriting}</Link><h1>{article.title}</h1>{article.excerpt && <p className="article-excerpt">{article.excerpt}</p>}<div className="article-meta"><span>{article.category}</span><time dateTime={article.date}>{article.date}</time></div></header><div className="prose"><Markdown source={article.content}/></div></article>
 }
 
 function AboutPage({ language, navigate }: { language: Language; navigate: Navigate }) {

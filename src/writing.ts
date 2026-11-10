@@ -5,7 +5,6 @@ export type Article = {
   title: string
   date: string
   category: Category
-  tags: string[]
   language: Language | 'both'
   excerpt: string
   content: string
@@ -39,7 +38,6 @@ function parseFrontMatter(source: string, fallbackSlug: string): Article | null 
     date: values.date,
     category,
     language,
-    tags: values.tags ? [...new Set(values.tags.split(',').map((tag) => tag.trim()).filter(Boolean))] : [],
     excerpt: values.excerpt || '',
     content: match[2].trim(),
   }

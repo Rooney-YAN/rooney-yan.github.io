@@ -244,21 +244,11 @@ a:hover .external-arrow, button:hover .external-arrow { transform: translate(2px
 .filter-tabs button { position: relative; padding: 10px 0 14px; border: 0; color: var(--muted); background: transparent; font-size: 14px; cursor: pointer; }
 .filter-tabs button:hover, .filter-tabs button.selected { color: var(--text); }
 .filter-tabs button.selected::after { content: ''; position: absolute; right: 0; bottom: -1px; left: 0; height: 2px; background: var(--accent); }
-.filter-tags { display: flex; align-items: baseline; gap: 22px; padding-top: 20px; }
-.filter-tags > span { flex: 0 0 42px; color: var(--quiet); font-size: 12px; }
-.filter-tag-list { display: flex; flex-wrap: wrap; gap: 8px; }
-.filter-tag-list button { padding: 5px 9px; border: 1px solid var(--line); color: var(--muted); background: transparent; font-size: 12px; line-height: 1.4; cursor: pointer; }
-.filter-tag-list button:hover, .filter-tag-list button.selected { border-color: var(--accent); color: var(--accent); }
-.clear-filters { display: block; margin: 18px 0 0 auto; padding: 0; border: 0; color: var(--accent); background: transparent; font-size: 12px; cursor: pointer; }
 .filter-empty { border-top: 1px solid var(--line); }
 .writing-row { display: grid; grid-template-columns: 115px minmax(0, 1fr) 28px; gap: 24px; align-items: start; padding: 21px 0; border-bottom: 1px solid var(--line); }
 .writing-meta { display: flex; flex-direction: column; gap: 7px; color: var(--quiet); font-family: Inter, "Noto Sans SC", sans-serif; font-size: 12px; letter-spacing: 0; text-transform: none; }
 .writing-row h3 { margin: -4px 0 0; font-family: "Iowan Old Style", "Palatino Linotype", "Noto Serif SC", Georgia, serif; font-size: 22px; font-weight: 500; line-height: 1.35; }
 .writing-row p { margin: 10px 0 0; color: var(--muted); font-size: 15px; line-height: 1.7; }
-.writing-row .tag-list { padding-top: 16px; }
-.writing-row .tag-list li { padding: 0; }
-.writing-row .tag-list button { padding: 4px 7px; border: 0; color: inherit; background: transparent; font: inherit; cursor: pointer; }
-.writing-row .tag-list button:hover, .writing-row .tag-list button[aria-pressed="true"] { color: var(--accent); }
 .row-arrow { justify-self: end; color: var(--quiet); font-size: 18px; }
 .empty-state { margin: 0; padding: 24px 0; color: var(--quiet); font-size: 14px; }
 
@@ -283,11 +273,7 @@ a:hover .external-arrow, button:hover .external-arrow { transform: translate(2px
 .article-page h1 { font-size: clamp(30px, 4vw, 50px); text-transform: none; }
 .article-excerpt { margin: 24px 0 0; color: var(--muted); font-size: 17px; line-height: 1.75; }
 .article-meta { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 22px; color: var(--quiet); font-family: Inter, "Noto Sans SC", sans-serif; font-size: 13px; }
-.article-tags { display: inline-flex; flex-wrap: wrap; gap: 7px; }
-.article-tags button { padding: 0; border: 0; color: var(--quiet); background: transparent; font: inherit; cursor: pointer; }
-.article-tags button + button::before { content: '·'; margin-right: 7px; color: var(--quiet); }
-.article-tags button:hover { color: var(--accent); }
-.writing-filters button:focus-visible, .tag-list button:focus-visible, .article-tags button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.writing-filters button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
 .prose { padding-top: 48px; font-family: Georgia, "Noto Serif SC", serif; font-size: 17px; line-height: 1.9; }
 .prose h2, .prose h3, .prose h4 { margin: 2.2em 0 .7em; color: var(--text); font-family: Georgia, "Noto Serif SC", serif; font-weight: 500; line-height: 1.3; }
 .prose h2 { font-size: 30px; }.prose h3 { font-size: 24px; }.prose h4 { font-size: 19px; }
@@ -347,8 +333,6 @@ footer a { justify-self: end; }
   .writing-row { grid-template-columns: 1fr 24px; gap: 16px; }
   .writing-meta { grid-column: 1 / -1; flex-direction: row; justify-content: space-between; }
   .filter-tabs { gap: 4px 18px; }
-  .filter-tags { display: block; }
-  .filter-tags > span { display: block; margin-bottom: 10px; }
   .page-intro { padding: 60px 0 44px; }
   .detail-row, .detail-links { grid-template-columns: 1fr; gap: 12px; }
   .research-card { padding: 21px 0; }

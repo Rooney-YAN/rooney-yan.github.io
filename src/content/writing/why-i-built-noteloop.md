@@ -3,7 +3,6 @@ title: 为了更好的完善我的笔记，我做了一个AI工具
 slug: why-i-built-noteloop
 date: 2026-10-20
 category: Tech
-tags: NoteLoop, AI, 学习, 产品构建
 language: zh
 excerpt: 从高中开始，我就想给自己建一个「外脑」。NoteLoop 是我这个笔记爱好者和完美主义者，为了找出知识盲区做的一次尝试。
 ---

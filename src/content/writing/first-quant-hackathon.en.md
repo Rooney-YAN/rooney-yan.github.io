@@ -3,7 +3,6 @@ title: My First Quant Hackathon: What I Learned
 slug: first-quant-hackathon
 date: 2026-10-22
 category: Thoughts
-tags: Quant, APAC Quant Trading Hackathon, AI, Trading
 language: en
 excerpt: We went from negative returns to near the top of the leaderboard, then finished seventh in Hong Kong. It made me look harder at backtests, long exposure, and my own judgment.
 ---

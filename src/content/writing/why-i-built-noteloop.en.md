@@ -3,7 +3,6 @@ title: I Built an AI Tool to Improve My Notes
 slug: why-i-built-noteloop
 date: 2026-10-20
 category: Tech
-tags: NoteLoop, AI, Learning, Building
 language: en
 excerpt: I've wanted to build a second brain since high school. NoteLoop is my attempt, as an obsessive note-taker and perfectionist, to find the gaps my notes cannot reveal on their own.
 ---
