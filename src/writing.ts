@@ -7,6 +7,7 @@ export type Article = {
   category: Category
   language: Language | 'both'
   excerpt: string
+  showExcerptOnPage: boolean
   content: string
 }
 
@@ -39,6 +40,7 @@ function parseFrontMatter(source: string, fallbackSlug: string): Article | null 
     category,
     language,
     excerpt: values.excerpt || '',
+    showExcerptOnPage: values.showExcerptOnPage !== 'false',
     content: match[2].trim(),
   }
 }

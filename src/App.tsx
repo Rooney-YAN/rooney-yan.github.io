@@ -176,7 +176,7 @@ function WritingPage({ language, navigate, search }: { language: Language; navig
 
 function ArticlePage({ article, language, navigate }: { article: Article; language: Language; navigate: Navigate }) {
   const copy = ui[language]
-  return <article className="article-page"><header><Link className="back-link" to="/writing" navigate={navigate}>← {copy.allWriting}</Link><h1>{article.title}</h1>{article.excerpt && <p className="article-excerpt">{article.excerpt}</p>}<div className="article-meta"><span>{article.category}</span><time dateTime={article.date}>{article.date}</time></div></header><div className="prose"><Markdown source={article.content}/></div></article>
+  return <article className="article-page"><header><Link className="back-link" to="/writing" navigate={navigate}>← {copy.allWriting}</Link><h1>{article.title}</h1>{article.excerpt && article.showExcerptOnPage && <p className="article-excerpt">{article.excerpt}</p>}<div className="article-meta"><span>{article.category}</span><time dateTime={article.date}>{article.date}</time></div></header><div className="prose"><Markdown source={article.content}/></div></article>
 }
 
 function AboutPage({ language, navigate }: { language: Language; navigate: Navigate }) {

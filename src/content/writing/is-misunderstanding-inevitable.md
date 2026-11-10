@@ -4,6 +4,8 @@ slug: is-misunderstanding-inevitable
 date: 2026-11-10
 category: Thoughts
 language: zh
+excerpt: 被误解或许是表达者的宿命。知道这一点之后，我仍然想写下这篇文章
+showExcerptOnPage: false
 ---
 
 我在日常交流里说过很多违心的话。
